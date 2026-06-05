@@ -1,0 +1,279 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 5 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 792 612] /Resources << /Font << /F1 7 0 R /F2 8 0 R >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 6451 >>
+stream
+BT /F2 16 Tf 30.0 582.0 Td (BikeAI Dashboard Analysis) Tj ET
+BT /F1 8 Tf 30.0 566.0 Td (Generated: 2026-05-26 12:38) Tj ET
+BT /F2 6.8 Tf 30.0 548.0 Td (Dashboard) Tj ET
+BT /F2 6.8 Tf 112.0 548.0 Td (Route) Tj ET
+BT /F2 6.8 Tf 205.0 548.0 Td (File/component) Tj ET
+BT /F2 6.8 Tf 320.0 548.0 Td (Roles) Tj ET
+BT /F2 6.8 Tf 385.0 548.0 Td (Features) Tj ET
+BT /F2 6.8 Tf 515.0 548.0 Td (APIs) Tj ET
+BT /F2 6.8 Tf 620.0 548.0 Td (Tables) Tj ET
+BT /F2 6.8 Tf 710.0 548.0 Td (Navigation) Tj ET
+30 544.0 m 762 544.0 l S
+BT /F1 5.8 Tf 30.0 537.0 Td (Admin Dashboard) Tj ET
+BT /F1 5.8 Tf 112.0 537.0 Td (/admin/dashboard) Tj ET
+BT /F1 5.8 Tf 205.0 537.0 Td (src/pages/DashboardPage.tsx) Tj ET
+BT /F1 5.8 Tf 320.0 537.0 Td (Admin only) Tj ET
+BT /F1 5.8 Tf 385.0 537.0 Td (Platform KPIs, total dealers,) Tj ET
+BT /F1 5.8 Tf 385.0 527.5 Td (pending dealers, total customers,) Tj ET
+BT /F1 5.8 Tf 385.0 518.0 Td (bookings, completed count, today) Tj ET
+BT /F1 5.8 Tf 385.0 508.5 Td (revenue, recent bookings, Executive) Tj ET
+BT /F1 5.8 Tf 385.0 499.0 Td (AI panel) Tj ET
+BT /F1 5.8 Tf 515.0 537.0 Td (Direct Supabase queries;) Tj ET
+BT /F1 5.8 Tf 515.0 527.5 Td (aiChatStream via ai-chat) Tj ET
+BT /F1 5.8 Tf 515.0 518.0 Td (Edge Function) Tj ET
+BT /F1 5.8 Tf 620.0 537.0 Td (service_centers,) Tj ET
+BT /F1 5.8 Tf 620.0 527.5 Td (profiles,) Tj ET
+BT /F1 5.8 Tf 620.0 518.0 Td (service_bookings) Tj ET
+BT /F1 5.8 Tf 710.0 537.0 Td (Login at) Tj ET
+BT /F1 5.8 Tf 710.0 527.5 Td (/login -> Prot) Tj ET
+BT /F1 5.8 Tf 710.0 518.0 Td (ectedAdminRout) Tj ET
+BT /F1 5.8 Tf 710.0 508.5 Td (e -> /admin/da) Tj ET
+BT /F1 5.8 Tf 710.0 499.0 Td (shboard) Tj ET
+30 489.5 m 762 489.5 l S
+BT /F1 5.8 Tf 30.0 484.5 Td (Customer Dashboard) Tj ET
+BT /F1 5.8 Tf 112.0 484.5 Td (/my/dashboard) Tj ET
+BT /F1 5.8 Tf 205.0 484.5 Td (src/customer/CustomerDashboardP) Tj ET
+BT /F1 5.8 Tf 205.0 475.0 Td (age.tsx) Tj ET
+BT /F1 5.8 Tf 320.0 484.5 Td (Logged-in) Tj ET
+BT /F1 5.8 Tf 320.0 475.0 Td (customer) Tj ET
+BT /F1 5.8 Tf 385.0 484.5 Td (Greeting, active booking alert,) Tj ET
+BT /F1 5.8 Tf 385.0 475.0 Td (quick service booking cards, garage) Tj ET
+BT /F1 5.8 Tf 385.0 465.5 Td (preview, recent bookings, promo) Tj ET
+BT /F1 5.8 Tf 385.0 456.0 Td (banner) Tj ET
+BT /F1 5.8 Tf 515.0 484.5 Td (Direct Supabase queries) Tj ET
+BT /F1 5.8 Tf 620.0 484.5 Td (customer_bookings,) Tj ET
+BT /F1 5.8 Tf 620.0 475.0 Td (customer_vehicles,) Tj ET
+BT /F1 5.8 Tf 620.0 465.5 Td (service_centers,) Tj ET
+BT /F1 5.8 Tf 620.0 456.0 Td (vehicle_models,) Tj ET
+BT /F1 5.8 Tf 620.0 446.5 Td (vehicle_oems) Tj ET
+BT /F1 5.8 Tf 710.0 484.5 Td (/my/auth) Tj ET
+BT /F1 5.8 Tf 710.0 475.0 Td (login/signup) Tj ET
+BT /F1 5.8 Tf 710.0 465.5 Td (->) Tj ET
+BT /F1 5.8 Tf 710.0 456.0 Td (/my/dashboard;) Tj ET
+BT /F1 5.8 Tf 710.0 446.5 Td (book ->) Tj ET
+BT /F1 5.8 Tf 710.0 437.0 Td (/my/book;) Tj ET
+BT /F1 5.8 Tf 710.0 427.5 Td (garage ->) Tj ET
+BT /F1 5.8 Tf 710.0 418.0 Td (/my/garage) Tj ET
+30 408.5 m 762 408.5 l S
+BT /F1 5.8 Tf 30.0 403.5 Td (Dealer Dashboard) Tj ET
+BT /F1 5.8 Tf 112.0 403.5 Td (/dealer/dashboard) Tj ET
+BT /F1 5.8 Tf 205.0 403.5 Td (src/dealer/DealerDashboardPage.) Tj ET
+BT /F1 5.8 Tf 205.0 394.0 Td (tsx) Tj ET
+BT /F1 5.8 Tf 320.0 403.5 Td (Dealer/Admin) Tj ET
+BT /F1 5.8 Tf 385.0 403.5 Td (Workshop overview, KPI cards,) Tj ET
+BT /F1 5.8 Tf 385.0 394.0 Td (active job card mock table, pending) Tj ET
+BT /F1 5.8 Tf 385.0 384.5 Td (pickup mock list, quick actions,) Tj ET
+BT /F1 5.8 Tf 385.0 375.0 Td (parts alert, revenue chart mock) Tj ET
+BT /F1 5.8 Tf 515.0 403.5 Td (No real API calls in this) Tj ET
+BT /F1 5.8 Tf 515.0 394.0 Td (page) Tj ET
+BT /F1 5.8 Tf 620.0 403.5 Td (No DB tables used) Tj ET
+BT /F1 5.8 Tf 620.0 394.0 Td (directly) Tj ET
+BT /F1 5.8 Tf 710.0 403.5 Td (/dealer/auth) Tj ET
+BT /F1 5.8 Tf 710.0 394.0 Td (-> /dealer/das) Tj ET
+BT /F1 5.8 Tf 710.0 384.5 Td (hboard; quick) Tj ET
+BT /F1 5.8 Tf 710.0 375.0 Td (links go to) Tj ET
+BT /F1 5.8 Tf 710.0 365.5 Td (queue,) Tj ET
+BT /F1 5.8 Tf 710.0 356.0 Td (bookings,) Tj ET
+BT /F1 5.8 Tf 710.0 346.5 Td (customers,) Tj ET
+BT /F1 5.8 Tf 710.0 337.0 Td (inventory,) Tj ET
+BT /F1 5.8 Tf 710.0 327.5 Td (analytics) Tj ET
+30 318.0 m 762 318.0 l S
+BT /F1 5.8 Tf 30.0 313.0 Td (CRM Dashboard) Tj ET
+BT /F1 5.8 Tf 112.0 313.0 Td (/dealer/crm) Tj ET
+BT /F1 5.8 Tf 205.0 313.0 Td (src/dealer/CRMDashboardPage.tsx) Tj ET
+BT /F1 5.8 Tf 320.0 313.0 Td (Dealer/Admin) Tj ET
+BT /F1 5.8 Tf 385.0 313.0 Td (Customer CRM, reminders, follow-) Tj ET
+BT /F1 5.8 Tf 385.0 303.5 Td (ups, retention tracking,) Tj ET
+BT /F1 5.8 Tf 385.0 294.0 Td (communication timeline, WhatsApp) Tj ET
+BT /F1 5.8 Tf 385.0 284.5 Td (templates, service due master, CSV) Tj ET
+BT /F1 5.8 Tf 385.0 275.0 Td (exports, CRM AI widget, revenue) Tj ET
+BT /F1 5.8 Tf 385.0 265.5 Td (widgets) Tj ET
+BT /F1 5.8 Tf 515.0 313.0 Td (Direct Supabase queries;) Tj ET
+BT /F1 5.8 Tf 515.0 303.5 Td (browser WhatsApp link; AI) Tj ET
+BT /F1 5.8 Tf 515.0 294.0 Td (widget uses ai-chat) Tj ET
+BT /F1 5.8 Tf 620.0 313.0 Td (service_centers,) Tj ET
+BT /F1 5.8 Tf 620.0 303.5 Td (profiles,) Tj ET
+BT /F1 5.8 Tf 620.0 294.0 Td (customer_vehicles,) Tj ET
+BT /F1 5.8 Tf 620.0 284.5 Td (customer_bookings,) Tj ET
+BT /F1 5.8 Tf 620.0 275.0 Td (crm_followups,) Tj ET
+BT /F1 5.8 Tf 620.0 265.5 Td (crm_booking_links,) Tj ET
+BT /F1 5.8 Tf 620.0 256.0 Td (crm_retention_feedback,) Tj ET
+BT /F1 5.8 Tf 620.0 246.5 Td (crm_interaction_events, ) Tj ET
+BT /F1 5.8 Tf 620.0 237.0 Td (crm_service_interval_rul) Tj ET
+BT /F1 5.8 Tf 620.0 227.5 Td (es, message_templates,) Tj ET
+BT /F1 5.8 Tf 620.0 218.0 Td (service_chat_memory, ser) Tj ET
+BT /F1 5.8 Tf 620.0 208.5 Td (vice_feedback_responses,) Tj ET
+BT /F1 5.8 Tf 620.0 199.0 Td (notification_queue,) Tj ET
+BT /F1 5.8 Tf 620.0 189.5 Td (vehicle_oems,) Tj ET
+BT /F1 5.8 Tf 620.0 180.0 Td (vehicle_models,) Tj ET
+BT /F1 5.8 Tf 620.0 170.5 Td (dealer_wallets,) Tj ET
+BT /F1 5.8 Tf 620.0 161.0 Td (bikeai_booking_charges, ) Tj ET
+BT /F1 5.8 Tf 620.0 151.5 Td (dealer_wallet_transactio) Tj ET
+BT /F1 5.8 Tf 620.0 142.0 Td (ns) Tj ET
+BT /F1 5.8 Tf 710.0 313.0 Td (/dealer/dashbo) Tj ET
+BT /F1 5.8 Tf 710.0 303.5 Td (ard -> sidebar) Tj ET
+BT /F1 5.8 Tf 710.0 294.0 Td (CRM ->) Tj ET
+BT /F1 5.8 Tf 710.0 284.5 Td (/dealer/crm;) Tj ET
+BT /F1 5.8 Tf 710.0 275.0 Td (reminder links) Tj ET
+BT /F1 5.8 Tf 710.0 265.5 Td (send users to ) Tj ET
+BT /F1 5.8 Tf 710.0 256.0 Td (/customer/book) Tj ET
+BT /F1 5.8 Tf 710.0 246.5 Td (/:token) Tj ET
+30 132.5 m 762 132.5 l S
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 792 612] /Resources << /Font << /F1 7 0 R /F2 8 0 R >> >> /Contents 6 0 R >>
+endobj
+6 0 obj
+<< /Length 6302 >>
+stream
+BT /F2 16 Tf 30.0 582.0 Td (BikeAI Dashboard Analysis) Tj ET
+BT /F1 8 Tf 30.0 566.0 Td (Generated: 2026-05-26 12:38) Tj ET
+BT /F2 6.8 Tf 30.0 548.0 Td (Dashboard) Tj ET
+BT /F2 6.8 Tf 112.0 548.0 Td (Route) Tj ET
+BT /F2 6.8 Tf 205.0 548.0 Td (File/component) Tj ET
+BT /F2 6.8 Tf 320.0 548.0 Td (Roles) Tj ET
+BT /F2 6.8 Tf 385.0 548.0 Td (Features) Tj ET
+BT /F2 6.8 Tf 515.0 548.0 Td (APIs) Tj ET
+BT /F2 6.8 Tf 620.0 548.0 Td (Tables) Tj ET
+BT /F2 6.8 Tf 710.0 548.0 Td (Navigation) Tj ET
+30 544.0 m 762 544.0 l S
+BT /F1 5.8 Tf 30.0 537.0 Td (Service Manager) Tj ET
+BT /F1 5.8 Tf 30.0 527.5 Td (Dashboard) Tj ET
+BT /F1 5.8 Tf 112.0 537.0 Td (/dealer/service-manager) Tj ET
+BT /F1 5.8 Tf 112.0 527.5 Td (and /dealer/queue) Tj ET
+BT /F1 5.8 Tf 205.0 537.0 Td (src/dealer/ServiceManagerDashbo) Tj ET
+BT /F1 5.8 Tf 205.0 527.5 Td (ardPage.tsx) Tj ET
+BT /F1 5.8 Tf 320.0 537.0 Td (Dealer/Admin) Tj ET
+BT /F1 5.8 Tf 385.0 537.0 Td (Job cards, convert bookings to) Tj ET
+BT /F1 5.8 Tf 385.0 527.5 Td (jobs, inspections, approvals,) Tj ET
+BT /F1 5.8 Tf 385.0 518.0 Td (status tracking, rider assignment,) Tj ET
+BT /F1 5.8 Tf 385.0 508.5 Td (no-update monitoring, CRM memory,) Tj ET
+BT /F1 5.8 Tf 385.0 499.0 Td (notifications, customer) Tj ET
+BT /F1 5.8 Tf 385.0 489.5 Td (tracking/approval/feedback links) Tj ET
+BT /F1 5.8 Tf 515.0 537.0 Td (Direct Supabase queries; RPC) Tj ET
+BT /F1 5.8 Tf 515.0 527.5 Td (charge_bikeai_booking_once;) Tj ET
+BT /F1 5.8 Tf 515.0 518.0 Td (AI widget uses ai-chat) Tj ET
+BT /F1 5.8 Tf 620.0 537.0 Td (service_centers,) Tj ET
+BT /F1 5.8 Tf 620.0 527.5 Td (customer_bookings,) Tj ET
+BT /F1 5.8 Tf 620.0 518.0 Td (service_job_cards,) Tj ET
+BT /F1 5.8 Tf 620.0 508.5 Td (service_job_timeline,) Tj ET
+BT /F1 5.8 Tf 620.0 499.0 Td (service_inspections, ser) Tj ET
+BT /F1 5.8 Tf 620.0 489.5 Td (vice_approval_requests,) Tj ET
+BT /F1 5.8 Tf 620.0 480.0 Td (service_technicians,) Tj ET
+BT /F1 5.8 Tf 620.0 470.5 Td (service_chat_memory,) Tj ET
+BT /F1 5.8 Tf 620.0 461.0 Td (service_customer_tokens,) Tj ET
+BT /F1 5.8 Tf 620.0 451.5 Td (crm_interaction_events,) Tj ET
+BT /F1 5.8 Tf 620.0 442.0 Td (notification_queue,) Tj ET
+BT /F1 5.8 Tf 620.0 432.5 Td (riders, dealer_wallets,) Tj ET
+BT /F1 5.8 Tf 620.0 423.0 Td (bikeai_booking_charges, ) Tj ET
+BT /F1 5.8 Tf 620.0 413.5 Td (dealer_wallet_transactio) Tj ET
+BT /F1 5.8 Tf 620.0 404.0 Td (ns) Tj ET
+BT /F1 5.8 Tf 710.0 537.0 Td (Dealer sidebar) Tj ET
+BT /F1 5.8 Tf 710.0 527.5 Td (->) Tj ET
+BT /F1 5.8 Tf 710.0 518.0 Td (/dealer/queue) Tj ET
+BT /F1 5.8 Tf 710.0 508.5 Td (or direct /dea) Tj ET
+BT /F1 5.8 Tf 710.0 499.0 Td (ler/service-) Tj ET
+BT /F1 5.8 Tf 710.0 489.5 Td (manager;) Tj ET
+BT /F1 5.8 Tf 710.0 480.0 Td (creates public) Tj ET
+BT /F1 5.8 Tf 710.0 470.5 Td (links) Tj ET
+BT /F1 5.8 Tf 710.0 461.0 Td (/track/:token,) Tj ET
+BT /F1 5.8 Tf 710.0 451.5 Td (/approval/:tok) Tj ET
+BT /F1 5.8 Tf 710.0 442.0 Td (en, /feedback/) Tj ET
+BT /F1 5.8 Tf 710.0 432.5 Td (:token) Tj ET
+30 394.5 m 762 394.5 l S
+BT /F1 5.8 Tf 30.0 389.5 Td (Admin Live Operations) Tj ET
+BT /F1 5.8 Tf 112.0 389.5 Td (/admin/live-ops) Tj ET
+BT /F1 5.8 Tf 205.0 389.5 Td (src/pages/LiveOpsPage.tsx) Tj ET
+BT /F1 5.8 Tf 320.0 389.5 Td (Admin only) Tj ET
+BT /F1 5.8 Tf 385.0 389.5 Td (Pickup/delivery monitoring, rider) Tj ET
+BT /F1 5.8 Tf 385.0 380.0 Td (overview, RSA overview, job status) Tj ET
+BT /F1 5.8 Tf 385.0 370.5 Td (updates) Tj ET
+BT /F1 5.8 Tf 515.0 389.5 Td (Direct Supabase queries) Tj ET
+BT /F1 5.8 Tf 620.0 389.5 Td (pickup_deliveries,) Tj ET
+BT /F1 5.8 Tf 620.0 380.0 Td (riders, rsa_requests,) Tj ET
+BT /F1 5.8 Tf 620.0 370.5 Td (profiles,) Tj ET
+BT /F1 5.8 Tf 620.0 361.0 Td (service_bookings) Tj ET
+BT /F1 5.8 Tf 710.0 389.5 Td (Admin sidebar) Tj ET
+BT /F1 5.8 Tf 710.0 380.0 Td (-> Live) Tj ET
+BT /F1 5.8 Tf 710.0 370.5 Td (Operations;) Tj ET
+BT /F1 5.8 Tf 710.0 361.0 Td (job detail) Tj ET
+BT /F1 5.8 Tf 710.0 351.5 Td (opens) Tj ET
+BT /F1 5.8 Tf 710.0 342.0 Td (/admin/live-) Tj ET
+BT /F1 5.8 Tf 710.0 332.5 Td (ops/job/:id) Tj ET
+30 323.0 m 762 323.0 l S
+BT /F1 5.8 Tf 30.0 318.0 Td (RSA Dashboard) Tj ET
+BT /F1 5.8 Tf 112.0 318.0 Td (/admin/rsa) Tj ET
+BT /F1 5.8 Tf 205.0 318.0 Td (src/pages/RSAPage.tsx) Tj ET
+BT /F1 5.8 Tf 320.0 318.0 Td (Admin only) Tj ET
+BT /F1 5.8 Tf 385.0 318.0 Td (RSA request list, assign rider,) Tj ET
+BT /F1 5.8 Tf 385.0 308.5 Td (update RSA status, create RSA) Tj ET
+BT /F1 5.8 Tf 385.0 299.0 Td (request) Tj ET
+BT /F1 5.8 Tf 515.0 318.0 Td (Direct Supabase queries) Tj ET
+BT /F1 5.8 Tf 620.0 318.0 Td (rsa_requests, riders,) Tj ET
+BT /F1 5.8 Tf 620.0 308.5 Td (profiles) Tj ET
+BT /F1 5.8 Tf 710.0 318.0 Td (Admin sidebar) Tj ET
+BT /F1 5.8 Tf 710.0 308.5 Td (-> RSA /) Tj ET
+BT /F1 5.8 Tf 710.0 299.0 Td (Breakdown) Tj ET
+30 289.5 m 762 289.5 l S
+BT /F1 5.8 Tf 30.0 284.5 Td (Job Detail Operations) Tj ET
+BT /F1 5.8 Tf 112.0 284.5 Td (/admin/live-ops/job/:id) Tj ET
+BT /F1 5.8 Tf 205.0 284.5 Td (src/pages/JobDetailPage.tsx) Tj ET
+BT /F1 5.8 Tf 320.0 284.5 Td (Admin only) Tj ET
+BT /F1 5.8 Tf 385.0 284.5 Td (Pickup job detail, rider) Tj ET
+BT /F1 5.8 Tf 385.0 275.0 Td (assignment, OTP generation, status) Tj ET
+BT /F1 5.8 Tf 385.0 265.5 Td (changes, condition reports) Tj ET
+BT /F1 5.8 Tf 515.0 284.5 Td (Direct Supabase queries) Tj ET
+BT /F1 5.8 Tf 620.0 284.5 Td (pickup_deliveries,) Tj ET
+BT /F1 5.8 Tf 620.0 275.0 Td (riders, vehicle_conditio) Tj ET
+BT /F1 5.8 Tf 620.0 265.5 Td (n_reports,) Tj ET
+BT /F1 5.8 Tf 620.0 256.0 Td (service_bookings,) Tj ET
+BT /F1 5.8 Tf 620.0 246.5 Td (profiles) Tj ET
+BT /F1 5.8 Tf 710.0 284.5 Td (From) Tj ET
+BT /F1 5.8 Tf 710.0 275.0 Td (/admin/live-) Tj ET
+BT /F1 5.8 Tf 710.0 265.5 Td (ops job list) Tj ET
+BT /F1 5.8 Tf 710.0 256.0 Td (-> job detail) Tj ET
+30 237.0 m 762 237.0 l S
+BT /F2 10 Tf 30.0 228.0 Td (Important Findings) Tj ET
+BT /F1 7 Tf 30.0 214.0 Td (- The real customer booking flow writes to customer_bookings.) Tj ET
+BT /F1 7 Tf 30.0 204.0 Td (- The Admin Dashboard reads service_bookings, so customer bookings may not appear there.) Tj ET
+BT /F1 7 Tf 30.0 194.0 Td (- The Dealer Dashboard is mostly static/mock data right now.) Tj ET
+BT /F1 7 Tf 30.0 184.0 Td (- The real dealer operations are in /dealer/queue and /dealer/service-manager.) Tj ET
+BT /F1 7 Tf 30.0 174.0 Td (- CRM and Service Manager are the most database-connected dashboards.) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+8 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+xref
+0 9
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000121 00000 n 
+0000000257 00000 n 
+0000006760 00000 n 
+0000006896 00000 n 
+0000013250 00000 n 
+0000013320 00000 n 
+trailer
+<< /Size 9 /Root 1 0 R >>
+startxref
+13395
+%%EOF

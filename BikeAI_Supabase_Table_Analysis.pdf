@@ -1,0 +1,734 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+3 0 obj
+<< /Length 3741 >>
+stream
+BT /F2 14 Tf 34.0 561.0 Td (BikeAI Supabase/PostgreSQL Table Analysis) Tj ET
+BT /F1 8 Tf 762.0 561.0 Td (Page 1) Tj ET
+0.6 w 34.0 543.0 m 808.0 543.0 l S
+BT /F2 12 Tf 34.0 527.0 Td (Summary) Tj ET
+BT /F2 8 Tf 34.0 512.0 Td (-) Tj ET
+BT /F1 8 Tf 116.0 512.0 Td (Parsed 44 public tables from Supabase migrations.) Tj ET
+BT /F2 8 Tf 34.0 497.0 Td (-) Tj ET
+BT /F1 8 Tf 116.0 497.0 Td (All parsed tables show RLS enabled in migration SQL: True.) Tj ET
+BT /F2 8 Tf 34.0 482.0 Td (-) Tj ET
+BT /F1 8 Tf 116.0 482.0 Td (Important referenced objects not found in parsed table migrations: oems, search_queries, api_logs.) Tj ET
+BT /F2 10 Tf 34.0 467.0 Td (bikeai_booking_charges   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 453.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 453.0 Td (BikeAI platform charge records.) Tj ET
+BT /F2 8 Tf 34.0 438.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 438.0 Td (src/dealer/DealerRevenueWidgets.tsx) Tj ET
+BT /F2 8 Tf 34.0 423.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 423.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 408.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 408.0 Td (src/dealer/DealerRevenueWidgets.tsx) Tj ET
+BT /F2 8 Tf 34.0 393.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 393.0 Td (contains financial data.) Tj ET
+0.6 w 34.0 376.0 m 808.0 376.0 l S
+BT /F2 10 Tf 34.0 366.0 Td (booking_timeline   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 352.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 352.0 Td (Stores booking timeline records; key columns include id, booking_id, status, message, actor_id, actor_name, created_at.) Tj ET
+BT /F2 8 Tf 34.0 337.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 337.0 Td (No current frontend read found) Tj ET
+BT /F2 8 Tf 34.0 322.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 322.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 307.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 307.0 Td (Migration/schema only in current scan) Tj ET
+BT /F2 8 Tf 34.0 292.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 292.0 Td (review effective policies for broad authenticated access.) Tj ET
+0.6 w 34.0 275.0 m 808.0 275.0 l S
+BT /F2 10 Tf 34.0 265.0 Td (crm_booking_links   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 251.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 251.0 Td (Stores crm booking links records; key columns include id, token, customer_id, vehicle_id, service_center_id, service_type,) Tj ET
+BT /F1 8 Tf 116.0 241.0 Td (due_date, due_km.) Tj ET
+BT /F2 8 Tf 34.0 226.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 226.0 Td (/dealer/crm, /my/book-service or /admin/bookings/new) Tj ET
+BT /F2 8 Tf 34.0 211.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 211.0 Td (/dealer/crm, /my/book-service or /admin/bookings/new) Tj ET
+BT /F2 8 Tf 34.0 196.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 196.0 Td (/dealer/crm, /my/book-service or /admin/bookings/new) Tj ET
+BT /F2 8 Tf 34.0 181.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 181.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 164.0 m 808.0 164.0 l S
+BT /F2 10 Tf 34.0 154.0 Td (crm_campaigns   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 140.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 140.0 Td (Stores crm campaigns records; key columns include id, name, campaign_type, target_type, template_id, message_body,) Tj ET
+BT /F1 8 Tf 116.0 130.0 Td (target_count, sent_count.) Tj ET
+BT /F2 8 Tf 34.0 115.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 115.0 Td (No current frontend read found) Tj ET
+BT /F2 8 Tf 34.0 100.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 100.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 85.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 85.0 Td (Migration/schema only in current scan) Tj ET
+BT /F2 8 Tf 34.0 70.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 70.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 53.0 m 808.0 53.0 l S
+endstream
+endobj
+4 0 obj
+<< /Length 3449 >>
+stream
+BT /F2 14 Tf 34.0 561.0 Td (BikeAI Supabase/PostgreSQL Table Analysis) Tj ET
+BT /F1 8 Tf 762.0 561.0 Td (Page 2) Tj ET
+0.6 w 34.0 543.0 m 808.0 543.0 l S
+BT /F2 10 Tf 34.0 527.0 Td (crm_followups   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 513.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 513.0 Td (Stores crm followups records; key columns include id, customer_id, service_center_id, title, follow_up_type, lead_status,) Tj ET
+BT /F1 8 Tf 116.0 503.0 Td (scheduled_at, completed_at.) Tj ET
+BT /F2 8 Tf 34.0 488.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 488.0 Td (/admin/customers/:id, /dealer/crm) Tj ET
+BT /F2 8 Tf 34.0 473.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 473.0 Td (/dealer/crm) Tj ET
+BT /F2 8 Tf 34.0 458.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 458.0 Td (/admin/customers/:id, /dealer/crm) Tj ET
+BT /F2 8 Tf 34.0 443.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 443.0 Td (review effective policies for broad authenticated access.) Tj ET
+0.6 w 34.0 426.0 m 808.0 426.0 l S
+BT /F2 10 Tf 34.0 416.0 Td (crm_interaction_events   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 402.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 402.0 Td (Stores crm interaction events records; key columns include id, customer_id, vehicle_id, service_center_id, event_type, title,) Tj ET
+BT /F1 8 Tf 116.0 392.0 Td (body, entity_type.) Tj ET
+BT /F2 8 Tf 34.0 377.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 377.0 Td (/dealer/crm) Tj ET
+BT /F2 8 Tf 34.0 362.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 362.0 Td (/dealer/crm, /dealer/queue or /dealer/service-manager, shared AI chat) Tj ET
+BT /F2 8 Tf 34.0 347.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 347.0 Td (/dealer/crm, /dealer/queue or /dealer/service-manager, shared AI chat) Tj ET
+BT /F2 8 Tf 34.0 332.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 332.0 Td (review effective policies for broad authenticated access.) Tj ET
+0.6 w 34.0 315.0 m 808.0 315.0 l S
+BT /F2 10 Tf 34.0 305.0 Td (crm_retention_feedback   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 291.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 291.0 Td (Stores crm retention feedback records; key columns include id, customer_id, vehicle_id, service_center_id, reason, details,) Tj ET
+BT /F1 8 Tf 116.0 281.0 Td (competitor_name, status.) Tj ET
+BT /F2 8 Tf 34.0 266.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 266.0 Td (/dealer/crm) Tj ET
+BT /F2 8 Tf 34.0 251.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 251.0 Td (/dealer/crm) Tj ET
+BT /F2 8 Tf 34.0 236.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 236.0 Td (/dealer/crm) Tj ET
+BT /F2 8 Tf 34.0 221.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 221.0 Td (review effective policies for broad authenticated access.) Tj ET
+0.6 w 34.0 204.0 m 808.0 204.0 l S
+BT /F2 10 Tf 34.0 194.0 Td (crm_service_interval_rules   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 180.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 180.0 Td (Stores crm service interval rules records; key columns include id, service_center_id, name, rule_type, service_type,) Tj ET
+BT /F1 8 Tf 116.0 170.0 Td (interval_days, interval_km, trigger_mode.) Tj ET
+BT /F2 8 Tf 34.0 155.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 155.0 Td (/dealer/crm) Tj ET
+BT /F2 8 Tf 34.0 140.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 140.0 Td (/dealer/crm) Tj ET
+BT /F2 8 Tf 34.0 125.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 125.0 Td (/dealer/crm) Tj ET
+BT /F2 8 Tf 34.0 110.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 110.0 Td (review effective policies for broad authenticated access.) Tj ET
+0.6 w 34.0 93.0 m 808.0 93.0 l S
+endstream
+endobj
+5 0 obj
+<< /Length 3794 >>
+stream
+BT /F2 14 Tf 34.0 561.0 Td (BikeAI Supabase/PostgreSQL Table Analysis) Tj ET
+BT /F1 8 Tf 762.0 561.0 Td (Page 3) Tj ET
+0.6 w 34.0 543.0 m 808.0 543.0 l S
+BT /F2 10 Tf 34.0 527.0 Td (csv_imports   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 513.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 513.0 Td (Stores csv imports records; key columns include id, import_type, file_name, total_rows, imported_rows, skipped_rows,) Tj ET
+BT /F1 8 Tf 116.0 503.0 Td (duplicate_rows, error_rows.) Tj ET
+BT /F2 8 Tf 34.0 488.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 488.0 Td (No current frontend read found) Tj ET
+BT /F2 8 Tf 34.0 473.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 473.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 458.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 458.0 Td (Migration/schema only in current scan) Tj ET
+BT /F2 8 Tf 34.0 443.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 443.0 Td (review effective policies for broad authenticated access.) Tj ET
+0.6 w 34.0 426.0 m 808.0 426.0 l S
+BT /F2 10 Tf 34.0 416.0 Td (customer_bookings   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 402.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 402.0 Td (Customer portal booking, pickup/drop, status, cost, tracking, and OTP records.) Tj ET
+BT /F2 8 Tf 34.0 387.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 387.0 Td (/dealer/crm, /dealer/queue or /dealer/service-manager, /my/book-service or /admin/bookings/new, /my/bookings or) Tj ET
+BT /F1 8 Tf 116.0 377.0 Td (/admin/bookings, /my/bookings/:id, /my/dashboard, supabase/functions/twilio-send/index.ts) Tj ET
+BT /F2 8 Tf 34.0 362.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 362.0 Td (/dealer/queue or /dealer/service-manager, /my/book-service or /admin/bookings/new, /my/bookings/:id) Tj ET
+BT /F2 8 Tf 34.0 347.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 347.0 Td (/dealer/crm, /dealer/queue or /dealer/service-manager, /my/book-service or /admin/bookings/new, /my/bookings or) Tj ET
+BT /F1 8 Tf 116.0 337.0 Td (/admin/bookings, /my/bookings/:id, /my/dashboard, supabase/functions/twilio-send/index.ts) Tj ET
+BT /F2 8 Tf 34.0 322.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 322.0 Td (contains PII/location/secret fields; contains financial data.) Tj ET
+0.6 w 34.0 305.0 m 808.0 305.0 l S
+BT /F2 10 Tf 34.0 295.0 Td (customer_documents   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 281.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 281.0 Td (Stores customer documents records; key columns include id, customer_id, vehicle_id, document_type, document_name, file_url,) Tj ET
+BT /F1 8 Tf 116.0 271.0 Td (expiry_date, is_verified.) Tj ET
+BT /F2 8 Tf 34.0 256.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 256.0 Td (No current frontend read found) Tj ET
+BT /F2 8 Tf 34.0 241.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 241.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 226.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 226.0 Td (Migration/schema only in current scan) Tj ET
+BT /F2 8 Tf 34.0 211.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 211.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 194.0 m 808.0 194.0 l S
+BT /F2 10 Tf 34.0 184.0 Td (customer_otp_sessions   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 170.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 170.0 Td (Stores customer otp sessions records; key columns include id, phone, otp_code, channel, is_verified, expires_at, created_at.) Tj ET
+BT /F2 8 Tf 34.0 155.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 155.0 Td (No current frontend read found) Tj ET
+BT /F2 8 Tf 34.0 140.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 140.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 125.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 125.0 Td (Migration/schema only in current scan) Tj ET
+BT /F2 8 Tf 34.0 110.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 110.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 93.0 m 808.0 93.0 l S
+endstream
+endobj
+6 0 obj
+<< /Length 3218 >>
+stream
+BT /F2 14 Tf 34.0 561.0 Td (BikeAI Supabase/PostgreSQL Table Analysis) Tj ET
+BT /F1 8 Tf 762.0 561.0 Td (Page 4) Tj ET
+0.6 w 34.0 543.0 m 808.0 543.0 l S
+BT /F2 10 Tf 34.0 527.0 Td (customer_reviews   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 513.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 513.0 Td (Stores customer reviews records; key columns include id, customer_id, booking_id, service_center_id, rating, review_text,) Tj ET
+BT /F1 8 Tf 116.0 503.0 Td (created_at.) Tj ET
+BT /F2 8 Tf 34.0 488.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 488.0 Td (No current frontend read found) Tj ET
+BT /F2 8 Tf 34.0 473.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 473.0 Td (/my/bookings/:id) Tj ET
+BT /F2 8 Tf 34.0 458.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 458.0 Td (/my/bookings/:id) Tj ET
+BT /F2 8 Tf 34.0 443.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 443.0 Td (review effective policies for broad authenticated access.) Tj ET
+0.6 w 34.0 426.0 m 808.0 426.0 l S
+BT /F2 10 Tf 34.0 416.0 Td (customer_vehicles   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 402.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 402.0 Td (Customer garage vehicles and service metadata.) Tj ET
+BT /F2 8 Tf 34.0 387.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 387.0 Td (/admin/customers, /admin/customers/:id, /dealer/crm, /my/book-service or /admin/bookings/new, /my/dashboard, /my/garage) Tj ET
+BT /F2 8 Tf 34.0 372.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 372.0 Td (/dealer/crm, /my/add-vehicle, /my/garage) Tj ET
+BT /F2 8 Tf 34.0 357.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 357.0 Td (/admin/customers, /admin/customers/:id, /dealer/crm, /my/add-vehicle, /my/book-service or /admin/bookings/new, /my/dashboard,) Tj ET
+BT /F1 8 Tf 116.0 347.0 Td (/my/garage) Tj ET
+BT /F2 8 Tf 34.0 332.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 332.0 Td (review effective policies for broad authenticated access.) Tj ET
+0.6 w 34.0 315.0 m 808.0 315.0 l S
+BT /F2 10 Tf 34.0 305.0 Td (dealer_wallet_transactions   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 291.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 291.0 Td (Dealer wallet transaction ledger.) Tj ET
+BT /F2 8 Tf 34.0 276.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 276.0 Td (src/dealer/DealerRevenueWidgets.tsx) Tj ET
+BT /F2 8 Tf 34.0 261.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 261.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 246.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 246.0 Td (src/dealer/DealerRevenueWidgets.tsx) Tj ET
+BT /F2 8 Tf 34.0 231.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 231.0 Td (contains financial data.) Tj ET
+0.6 w 34.0 214.0 m 808.0 214.0 l S
+BT /F2 10 Tf 34.0 204.0 Td (dealer_wallets   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 190.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 190.0 Td (Dealer wallet balance and status.) Tj ET
+BT /F2 8 Tf 34.0 175.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 175.0 Td (src/dealer/DealerRevenueWidgets.tsx) Tj ET
+BT /F2 8 Tf 34.0 160.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 160.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 145.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 145.0 Td (src/dealer/DealerRevenueWidgets.tsx) Tj ET
+BT /F2 8 Tf 34.0 130.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 130.0 Td (contains financial data.) Tj ET
+0.6 w 34.0 113.0 m 808.0 113.0 l S
+endstream
+endobj
+7 0 obj
+<< /Length 3641 >>
+stream
+BT /F2 14 Tf 34.0 561.0 Td (BikeAI Supabase/PostgreSQL Table Analysis) Tj ET
+BT /F1 8 Tf 762.0 561.0 Td (Page 5) Tj ET
+0.6 w 34.0 543.0 m 808.0 543.0 l S
+BT /F2 10 Tf 34.0 527.0 Td (geofence_events   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 513.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 513.0 Td (Stores geofence events records; key columns include id, rider_id, job_id, event_type, triggered_at, lat, lng, auto_action.) Tj ET
+BT /F2 8 Tf 34.0 498.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 498.0 Td (No current frontend read found) Tj ET
+BT /F2 8 Tf 34.0 483.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 483.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 468.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 468.0 Td (Migration/schema only in current scan) Tj ET
+BT /F2 8 Tf 34.0 453.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 453.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 436.0 m 808.0 436.0 l S
+BT /F2 10 Tf 34.0 426.0 Td (live_notifications   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 412.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 412.0 Td (Stores live notifications records; key columns include id, recipient_id, job_id, rsa_id, event_type, title, body, channel.) Tj ET
+BT /F2 8 Tf 34.0 397.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 397.0 Td (No current frontend read found) Tj ET
+BT /F2 8 Tf 34.0 382.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 382.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 367.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 367.0 Td (Migration/schema only in current scan) Tj ET
+BT /F2 8 Tf 34.0 352.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 352.0 Td (review effective policies for broad authenticated access.) Tj ET
+0.6 w 34.0 335.0 m 808.0 335.0 l S
+BT /F2 10 Tf 34.0 325.0 Td (message_templates   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 311.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 311.0 Td (CRM/ops message template definitions.) Tj ET
+BT /F2 8 Tf 34.0 296.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 296.0 Td (/dealer/crm) Tj ET
+BT /F2 8 Tf 34.0 281.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 281.0 Td (/dealer/crm) Tj ET
+BT /F2 8 Tf 34.0 266.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 266.0 Td (/dealer/crm) Tj ET
+BT /F2 8 Tf 34.0 251.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 251.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 234.0 m 808.0 234.0 l S
+BT /F2 10 Tf 34.0 224.0 Td (notification_queue   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 210.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 210.0 Td (Queued outbound customer/dealer notifications.) Tj ET
+BT /F2 8 Tf 34.0 195.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 195.0 Td (/dealer/crm) Tj ET
+BT /F2 8 Tf 34.0 180.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 180.0 Td (/dealer/crm, /dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 165.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 165.0 Td (/dealer/crm, /dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 150.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 150.0 Td (review effective policies for broad authenticated access.) Tj ET
+0.6 w 34.0 133.0 m 808.0 133.0 l S
+BT /F2 10 Tf 34.0 123.0 Td (otp_verifications   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 109.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 109.0 Td (Stores otp verifications records; key columns include id, job_id, phone, otp_code, purpose, channel, is_verified, verified_at.) Tj ET
+BT /F2 8 Tf 34.0 94.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 94.0 Td (No current frontend read found) Tj ET
+BT /F2 8 Tf 34.0 79.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 79.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 64.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 64.0 Td (Migration/schema only in current scan) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Length 4368 >>
+stream
+BT /F2 14 Tf 34.0 561.0 Td (BikeAI Supabase/PostgreSQL Table Analysis) Tj ET
+BT /F1 8 Tf 762.0 561.0 Td (Page 6) Tj ET
+0.6 w 34.0 543.0 m 808.0 543.0 l S
+BT /F2 8 Tf 34.0 527.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 527.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 510.0 m 808.0 510.0 l S
+BT /F2 10 Tf 34.0 500.0 Td (pickup_deliveries   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 486.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 486.0 Td (Pickup/delivery jobs and rider tracking.) Tj ET
+BT /F2 8 Tf 34.0 471.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 471.0 Td (/admin/live-ops, /admin/live-ops/job/:id, /admin/live-ops/new-job) Tj ET
+BT /F2 8 Tf 34.0 456.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 456.0 Td (/admin/live-ops, /admin/live-ops/job/:id, /admin/live-ops/new-job) Tj ET
+BT /F2 8 Tf 34.0 441.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 441.0 Td (/admin/live-ops, /admin/live-ops/job/:id, /admin/live-ops/new-job) Tj ET
+BT /F2 8 Tf 34.0 426.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 426.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 409.0 m 808.0 409.0 l S
+BT /F2 10 Tf 34.0 399.0 Td (profiles   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 385.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 385.0 Td (User profile, contact, and role records.) Tj ET
+BT /F2 8 Tf 34.0 370.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 370.0 Td (/admin/customers, /admin/customers/:id, /admin/customers/new, /admin/dashboard, /admin/live-ops/new-job, /admin/rsa,) Tj ET
+BT /F1 8 Tf 116.0 360.0 Td (/admin/users, /dealer/crm, /my/book-service or /admin/bookings/new, /my/settings, src/hooks/useAuth.ts,) Tj ET
+BT /F1 8 Tf 116.0 350.0 Td (src/hooks/useCustomerAuth.ts, src/hooks/useDealerAuth.ts, src/pages/SettingsPage.tsx, supabase/functions/ai-chat/index.ts,) Tj ET
+BT /F1 8 Tf 116.0 340.0 Td (supabase/functions/twilio-send/index.ts) Tj ET
+BT /F2 8 Tf 34.0 325.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 325.0 Td (/admin/customers/new, /admin/rsa, /admin/users, /dealer/crm, /my/settings, src/pages/SettingsPage.tsx) Tj ET
+BT /F2 8 Tf 34.0 310.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 310.0 Td (/admin/customers, /admin/customers/:id, /admin/customers/new, /admin/dashboard, /admin/live-ops/new-job, /admin/rsa,) Tj ET
+BT /F1 8 Tf 116.0 300.0 Td (/admin/users, /dealer/crm, /my/book-service or /admin/bookings/new, /my/settings, src/hooks/useAuth.ts,) Tj ET
+BT /F1 8 Tf 116.0 290.0 Td (src/hooks/useCustomerAuth.ts, src/hooks/useDealerAuth.ts, src/lib/supabase.ts, src/pages/SettingsPage.tsx,) Tj ET
+BT /F1 8 Tf 116.0 280.0 Td (supabase/functions/ai-chat/index.ts, supabase/functions/twilio-send/index.ts) Tj ET
+BT /F2 8 Tf 34.0 265.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 265.0 Td (contains PII/location/secret fields; role changes must be protected.) Tj ET
+0.6 w 34.0 248.0 m 808.0 248.0 l S
+BT /F2 10 Tf 34.0 238.0 Td (rider_location_pings   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 224.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 224.0 Td (Stores rider location pings records; key columns include id, rider_id, job_id, lat, lng, speed_kmph, heading, accuracy_m.) Tj ET
+BT /F2 8 Tf 34.0 209.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 209.0 Td (No current frontend read found) Tj ET
+BT /F2 8 Tf 34.0 194.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 194.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 179.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 179.0 Td (Migration/schema only in current scan) Tj ET
+BT /F2 8 Tf 34.0 164.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 164.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 147.0 m 808.0 147.0 l S
+BT /F2 10 Tf 34.0 137.0 Td (riders   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 123.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 123.0 Td (Pickup, delivery, and RSA rider records.) Tj ET
+BT /F2 8 Tf 34.0 108.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 108.0 Td (/admin/live-ops, /admin/live-ops/job/:id, /admin/live-ops/new-job, /admin/rsa, /dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 93.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 93.0 Td (/admin/live-ops, /admin/live-ops/job/:id, /admin/live-ops/new-job, /admin/rsa, /dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 78.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 78.0 Td (/admin/live-ops, /admin/live-ops/job/:id, /admin/live-ops/new-job, /admin/rsa, /dealer/queue or /dealer/service-manager,) Tj ET
+BT /F1 8 Tf 116.0 68.0 Td (src/App.tsx) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Length 4206 >>
+stream
+BT /F2 14 Tf 34.0 561.0 Td (BikeAI Supabase/PostgreSQL Table Analysis) Tj ET
+BT /F1 8 Tf 762.0 561.0 Td (Page 7) Tj ET
+0.6 w 34.0 543.0 m 808.0 543.0 l S
+BT /F2 8 Tf 34.0 527.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 527.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 510.0 m 808.0 510.0 l S
+BT /F2 10 Tf 34.0 500.0 Td (rsa_requests   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 486.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 486.0 Td (Roadside assistance requests.) Tj ET
+BT /F2 8 Tf 34.0 471.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 471.0 Td (/admin/live-ops, /admin/rsa) Tj ET
+BT /F2 8 Tf 34.0 456.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 456.0 Td (/admin/live-ops, /admin/rsa) Tj ET
+BT /F2 8 Tf 34.0 441.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 441.0 Td (/admin/live-ops, /admin/rsa) Tj ET
+BT /F2 8 Tf 34.0 426.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 426.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 409.0 m 808.0 409.0 l S
+BT /F2 10 Tf 34.0 399.0 Td (service_approval_requests   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 385.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 385.0 Td (Customer approval requests for additional service work.) Tj ET
+BT /F2 8 Tf 34.0 370.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 370.0 Td (/dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 355.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 355.0 Td (/dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 340.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 340.0 Td (/dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 325.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 325.0 Td (contains financial data.) Tj ET
+0.6 w 34.0 308.0 m 808.0 308.0 l S
+BT /F2 10 Tf 34.0 298.0 Td (service_bookings   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 284.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 284.0 Td (Legacy/admin service booking records.) Tj ET
+BT /F2 8 Tf 34.0 269.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 269.0 Td (/admin/customers/:id, /admin/dashboard, /admin/dealers/:id, /admin/live-ops/new-job, /my/book-service or /admin/bookings/new,) Tj ET
+BT /F1 8 Tf 116.0 259.0 Td (/my/bookings or /admin/bookings, supabase/functions/twilio-send/index.ts) Tj ET
+BT /F2 8 Tf 34.0 244.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 244.0 Td (/admin/dealers/:id, /my/book-service or /admin/bookings/new, /my/bookings or /admin/bookings) Tj ET
+BT /F2 8 Tf 34.0 229.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 229.0 Td (/admin/customers/:id, /admin/dashboard, /admin/dealers/:id, /admin/live-ops/new-job, /my/book-service or /admin/bookings/new,) Tj ET
+BT /F1 8 Tf 116.0 219.0 Td (/my/bookings or /admin/bookings, src/lib/supabase.ts, supabase/functions/twilio-send/index.ts) Tj ET
+BT /F2 8 Tf 34.0 204.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 204.0 Td (review effective policies for broad authenticated access.) Tj ET
+0.6 w 34.0 187.0 m 808.0 187.0 l S
+BT /F2 10 Tf 34.0 177.0 Td (service_centers   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 163.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 163.0 Td (Dealer/workshop profile, owner, address, status, capacity, and location.) Tj ET
+BT /F2 8 Tf 34.0 148.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 148.0 Td (/admin/dashboard, /admin/dealers, /admin/dealers/:id, /dealer/crm, /dealer/queue or /dealer/service-manager, /my/book-service) Tj ET
+BT /F1 8 Tf 116.0 138.0 Td (or /admin/bookings/new, src/components/DealerModal.tsx, supabase/functions/dealer-search/index.ts, supabase/functions/twilio-) Tj ET
+BT /F1 8 Tf 116.0 128.0 Td (send/index.ts) Tj ET
+BT /F2 8 Tf 34.0 113.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 113.0 Td (/admin/dealers, /admin/dealers/:id, src/components/DealerModal.tsx) Tj ET
+BT /F2 8 Tf 34.0 98.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 98.0 Td (/admin/dashboard, /admin/dealers, /admin/dealers/:id, /dealer/crm, /dealer/queue or /dealer/service-manager, /my/book-service) Tj ET
+BT /F1 8 Tf 116.0 88.0 Td (or /admin/bookings/new, src/components/DealerModal.tsx, src/lib/supabase.ts, supabase/functions/dealer-search/index.ts,) Tj ET
+BT /F1 8 Tf 116.0 78.0 Td (supabase/functions/twilio-send/index.ts) Tj ET
+BT /F2 8 Tf 34.0 63.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 63.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 46.0 m 808.0 46.0 l S
+endstream
+endobj
+10 0 obj
+<< /Length 3314 >>
+stream
+BT /F2 14 Tf 34.0 561.0 Td (BikeAI Supabase/PostgreSQL Table Analysis) Tj ET
+BT /F1 8 Tf 762.0 561.0 Td (Page 8) Tj ET
+0.6 w 34.0 543.0 m 808.0 543.0 l S
+BT /F2 10 Tf 34.0 527.0 Td (service_chat_memory   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 513.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 513.0 Td (CRM/service chat memory and AI context.) Tj ET
+BT /F2 8 Tf 34.0 498.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 498.0 Td (/dealer/crm, /dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 483.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 483.0 Td (/dealer/crm, /dealer/queue or /dealer/service-manager, shared AI chat) Tj ET
+BT /F2 8 Tf 34.0 468.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 468.0 Td (/dealer/crm, /dealer/queue or /dealer/service-manager, shared AI chat) Tj ET
+BT /F2 8 Tf 34.0 453.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 453.0 Td (review effective policies for broad authenticated access.) Tj ET
+0.6 w 34.0 436.0 m 808.0 436.0 l S
+BT /F2 10 Tf 34.0 426.0 Td (service_customer_tokens   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 412.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 412.0 Td (Stores service customer tokens records; key columns include id, token, token_type, customer_id, booking_id, job_card_id,) Tj ET
+BT /F1 8 Tf 116.0 402.0 Td (approval_id, service_center_id.) Tj ET
+BT /F2 8 Tf 34.0 387.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 387.0 Td (No current frontend read found) Tj ET
+BT /F2 8 Tf 34.0 372.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 372.0 Td (/dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 357.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 357.0 Td (/dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 342.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 342.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 325.0 m 808.0 325.0 l S
+BT /F2 10 Tf 34.0 315.0 Td (service_feedback_responses   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 301.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 301.0 Td (Stores service feedback responses records; key columns include id, token_id, customer_id, booking_id, job_card_id,) Tj ET
+BT /F1 8 Tf 116.0 291.0 Td (service_center_id, rating, comments.) Tj ET
+BT /F2 8 Tf 34.0 276.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 276.0 Td (/dealer/crm) Tj ET
+BT /F2 8 Tf 34.0 261.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 261.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 246.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 246.0 Td (/dealer/crm) Tj ET
+BT /F2 8 Tf 34.0 231.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 231.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 214.0 m 808.0 214.0 l S
+BT /F2 10 Tf 34.0 204.0 Td (service_inspections   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 190.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 190.0 Td (Vehicle inspection checklists, photos, notes, and acknowledgements.) Tj ET
+BT /F2 8 Tf 34.0 175.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 175.0 Td (/dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 160.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 160.0 Td (/dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 145.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 145.0 Td (/dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 130.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 130.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 113.0 m 808.0 113.0 l S
+endstream
+endobj
+11 0 obj
+<< /Length 3641 >>
+stream
+BT /F2 14 Tf 34.0 561.0 Td (BikeAI Supabase/PostgreSQL Table Analysis) Tj ET
+BT /F1 8 Tf 762.0 561.0 Td (Page 9) Tj ET
+0.6 w 34.0 543.0 m 808.0 543.0 l S
+BT /F2 10 Tf 34.0 527.0 Td (service_intervals   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 513.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 513.0 Td (Catalog service interval rules.) Tj ET
+BT /F2 8 Tf 34.0 498.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 498.0 Td (No current frontend read found) Tj ET
+BT /F2 8 Tf 34.0 483.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 483.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 468.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 468.0 Td (Migration/schema only in current scan) Tj ET
+BT /F2 8 Tf 34.0 453.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 453.0 Td (review effective policies for broad authenticated access.) Tj ET
+0.6 w 34.0 436.0 m 808.0 436.0 l S
+BT /F2 10 Tf 34.0 426.0 Td (service_job_cards   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 412.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 412.0 Td (Dealer service operations job cards.) Tj ET
+BT /F2 8 Tf 34.0 397.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 397.0 Td (/dealer/queue or /dealer/service-manager, shared AI chat, supabase/functions/twilio-send/index.ts) Tj ET
+BT /F2 8 Tf 34.0 382.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 382.0 Td (/dealer/queue or /dealer/service-manager, shared AI chat) Tj ET
+BT /F2 8 Tf 34.0 367.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 367.0 Td (/dealer/queue or /dealer/service-manager, shared AI chat, supabase/functions/twilio-send/index.ts) Tj ET
+BT /F2 8 Tf 34.0 352.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 352.0 Td (contains financial data.) Tj ET
+0.6 w 34.0 335.0 m 808.0 335.0 l S
+BT /F2 10 Tf 34.0 325.0 Td (service_job_timeline   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 311.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 311.0 Td (Timeline/status events for job cards.) Tj ET
+BT /F2 8 Tf 34.0 296.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 296.0 Td (/dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 281.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 281.0 Td (/dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 266.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 266.0 Td (/dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 251.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 251.0 Td (review effective policies for broad authenticated access.) Tj ET
+0.6 w 34.0 234.0 m 808.0 234.0 l S
+BT /F2 10 Tf 34.0 224.0 Td (service_technicians   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 210.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 210.0 Td (Dealer technician staff records.) Tj ET
+BT /F2 8 Tf 34.0 195.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 195.0 Td (/dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 180.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 180.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 165.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 165.0 Td (/dealer/queue or /dealer/service-manager) Tj ET
+BT /F2 8 Tf 34.0 150.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 150.0 Td (contains PII/location/secret fields; role changes must be protected.) Tj ET
+0.6 w 34.0 133.0 m 808.0 133.0 l S
+BT /F2 10 Tf 34.0 123.0 Td (sms_messages   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 109.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 109.0 Td (Stores sms messages records; key columns include id, to_phone, message_type, body_preview, twilio_sid, status, customer_id,) Tj ET
+BT /F1 8 Tf 116.0 99.0 Td (booking_id.) Tj ET
+BT /F2 8 Tf 34.0 84.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 84.0 Td (No current frontend read found) Tj ET
+BT /F2 8 Tf 34.0 69.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 69.0 Td (supabase/functions/twilio-send/index.ts) Tj ET
+endstream
+endobj
+12 0 obj
+<< /Length 3524 >>
+stream
+BT /F2 14 Tf 34.0 561.0 Td (BikeAI Supabase/PostgreSQL Table Analysis) Tj ET
+BT /F1 8 Tf 762.0 561.0 Td (Page 10) Tj ET
+0.6 w 34.0 543.0 m 808.0 543.0 l S
+BT /F2 8 Tf 34.0 527.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 527.0 Td (supabase/functions/twilio-send/index.ts) Tj ET
+BT /F2 8 Tf 34.0 512.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 512.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 495.0 m 808.0 495.0 l S
+BT /F2 10 Tf 34.0 485.0 Td (vehicle_condition_reports   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 471.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 471.0 Td (Stores vehicle condition reports records; key columns include id, job_id, booking_id, report_type, photos, scratch_map,) Tj ET
+BT /F1 8 Tf 116.0 461.0 Td (fuel_level, odometer_km.) Tj ET
+BT /F2 8 Tf 34.0 446.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 446.0 Td (/admin/live-ops/job/:id) Tj ET
+BT /F2 8 Tf 34.0 431.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 431.0 Td (/admin/live-ops/job/:id) Tj ET
+BT /F2 8 Tf 34.0 416.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 416.0 Td (/admin/live-ops/job/:id) Tj ET
+BT /F2 8 Tf 34.0 401.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 401.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 384.0 m 808.0 384.0 l S
+BT /F2 10 Tf 34.0 374.0 Td (vehicle_documents   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 360.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 360.0 Td (Stores vehicle documents records; key columns include id, vehicle_id, customer_id, doc_type, doc_name, doc_url, expiry_date,) Tj ET
+BT /F1 8 Tf 116.0 350.0 Td (is_verified.) Tj ET
+BT /F2 8 Tf 34.0 335.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 335.0 Td (/admin/customers/:id) Tj ET
+BT /F2 8 Tf 34.0 320.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 320.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 305.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 305.0 Td (/admin/customers/:id) Tj ET
+BT /F2 8 Tf 34.0 290.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 290.0 Td (contains PII/location/secret fields.) Tj ET
+0.6 w 34.0 273.0 m 808.0 273.0 l S
+BT /F2 10 Tf 34.0 263.0 Td (vehicle_models   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 249.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 249.0 Td (Vehicle model catalog linked to OEMs.) Tj ET
+BT /F2 8 Tf 34.0 234.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 234.0 Td (/admin/vehicles, /dealer/crm, /my/add-vehicle, shared vehicle search API, shared vehicle selector) Tj ET
+BT /F2 8 Tf 34.0 219.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 219.0 Td (/my/add-vehicle) Tj ET
+BT /F2 8 Tf 34.0 204.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 204.0 Td (/admin/vehicles, /dealer/crm, /my/add-vehicle, shared vehicle search API, shared vehicle selector) Tj ET
+BT /F2 8 Tf 34.0 189.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 189.0 Td (catalog writes should be admin-only.) Tj ET
+0.6 w 34.0 172.0 m 808.0 172.0 l S
+BT /F2 10 Tf 34.0 162.0 Td (vehicle_oems   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 148.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 148.0 Td (Vehicle OEM/brand catalog.) Tj ET
+BT /F2 8 Tf 34.0 133.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 133.0 Td (/admin/vehicles, /dealer/crm, /my/add-vehicle, shared vehicle selector) Tj ET
+BT /F2 8 Tf 34.0 118.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 118.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 103.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 103.0 Td (/admin/vehicles, /dealer/crm, /my/add-vehicle, shared vehicle selector) Tj ET
+BT /F2 8 Tf 34.0 88.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 88.0 Td (catalog writes should be admin-only.) Tj ET
+0.6 w 34.0 71.0 m 808.0 71.0 l S
+endstream
+endobj
+13 0 obj
+<< /Length 1651 >>
+stream
+BT /F2 14 Tf 34.0 561.0 Td (BikeAI Supabase/PostgreSQL Table Analysis) Tj ET
+BT /F1 8 Tf 762.0 561.0 Td (Page 11) Tj ET
+0.6 w 34.0 543.0 m 808.0 543.0 l S
+BT /F2 10 Tf 34.0 527.0 Td (vehicle_specs   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 513.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 513.0 Td (Stores vehicle specs records; key columns include id, model_id, engine_cc, power_bhp, torque_nm, compression_ratio,) Tj ET
+BT /F1 8 Tf 116.0 503.0 Td (engine_type, fuel_tank_litres.) Tj ET
+BT /F2 8 Tf 34.0 488.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 488.0 Td (No current frontend read found) Tj ET
+BT /F2 8 Tf 34.0 473.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 473.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 458.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 458.0 Td (Migration/schema only in current scan) Tj ET
+BT /F2 8 Tf 34.0 443.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 443.0 Td (catalog writes should be admin-only.) Tj ET
+0.6 w 34.0 426.0 m 808.0 426.0 l S
+BT /F2 10 Tf 34.0 416.0 Td (vehicle_variants   |   RLS: Yes) Tj ET
+BT /F2 8 Tf 34.0 402.0 Td (Purpose) Tj ET
+BT /F1 8 Tf 116.0 402.0 Td (Vehicle variant catalog linked to models.) Tj ET
+BT /F2 8 Tf 34.0 387.0 Td (Read pages) Tj ET
+BT /F1 8 Tf 116.0 387.0 Td (No current frontend read found) Tj ET
+BT /F2 8 Tf 34.0 372.0 Td (Write pages) Tj ET
+BT /F1 8 Tf 116.0 372.0 Td (No current frontend write found) Tj ET
+BT /F2 8 Tf 34.0 357.0 Td (Used by) Tj ET
+BT /F1 8 Tf 116.0 357.0 Td (Migration/schema only in current scan) Tj ET
+BT /F2 8 Tf 34.0 342.0 Td (Security risk) Tj ET
+BT /F1 8 Tf 116.0 342.0 Td (catalog writes should be admin-only.) Tj ET
+0.6 w 34.0 325.0 m 808.0 325.0 l S
+endstream
+endobj
+14 0 obj
+<< /Type /Page /Parent 25 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 3 0 R >>
+endobj
+15 0 obj
+<< /Type /Page /Parent 25 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 4 0 R >>
+endobj
+16 0 obj
+<< /Type /Page /Parent 25 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 5 0 R >>
+endobj
+17 0 obj
+<< /Type /Page /Parent 25 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 6 0 R >>
+endobj
+18 0 obj
+<< /Type /Page /Parent 25 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 7 0 R >>
+endobj
+19 0 obj
+<< /Type /Page /Parent 25 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 8 0 R >>
+endobj
+20 0 obj
+<< /Type /Page /Parent 25 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 9 0 R >>
+endobj
+21 0 obj
+<< /Type /Page /Parent 25 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 10 0 R >>
+endobj
+22 0 obj
+<< /Type /Page /Parent 25 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 11 0 R >>
+endobj
+23 0 obj
+<< /Type /Page /Parent 25 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 12 0 R >>
+endobj
+24 0 obj
+<< /Type /Page /Parent 25 0 R /MediaBox [0 0 842 595] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 13 0 R >>
+endobj
+25 0 obj
+<< /Type /Pages /Kids [14 0 R 15 0 R 16 0 R 17 0 R 18 0 R 19 0 R 20 0 R 21 0 R 22 0 R 23 0 R 24 0 R] /Count 11 >>
+endobj
+26 0 obj
+<< /Type /Catalog /Pages 25 0 R >>
+endobj
+xref
+0 27
+0000000000 65535 f 
+0000000009 00000 n 
+0000000079 00000 n 
+0000000154 00000 n 
+0000003947 00000 n 
+0000007448 00000 n 
+0000011294 00000 n 
+0000014564 00000 n 
+0000018257 00000 n 
+0000022677 00000 n 
+0000026935 00000 n 
+0000030302 00000 n 
+0000033996 00000 n 
+0000037573 00000 n 
+0000039277 00000 n 
+0000039415 00000 n 
+0000039553 00000 n 
+0000039691 00000 n 
+0000039829 00000 n 
+0000039967 00000 n 
+0000040105 00000 n 
+0000040243 00000 n 
+0000040382 00000 n 
+0000040521 00000 n 
+0000040660 00000 n 
+0000040799 00000 n 
+0000040929 00000 n 
+trailer
+<< /Size 27 /Root 26 0 R >>
+startxref
+40980
+%%EOF

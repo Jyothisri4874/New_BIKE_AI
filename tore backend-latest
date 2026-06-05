@@ -1,0 +1,275 @@
+[1mdiff --git a/BikeAiSrevice2-main/src/dealer/WipWorkflowPage.tsx b/BikeAiSrevice2-main/src/dealer/WipWorkflowPage.tsx[m
+[1mindex c142c77..bfb0b19 100644[m
+[1m--- a/BikeAiSrevice2-main/src/dealer/WipWorkflowPage.tsx[m
+[1m+++ b/BikeAiSrevice2-main/src/dealer/WipWorkflowPage.tsx[m
+[36m@@ -1,4 +1,4 @@[m
+[31m-import { FormEvent, useEffect, useMemo, useState } from 'react'[m
+[32m+[m[32mimport { ChangeEvent, FormEvent, useEffect, useMemo, useState } from 'react'[m
+ import {[m
+   AlertTriangle,[m
+   Bike,[m
+[36m@@ -16,7 +16,9 @@[m [mimport {[m
+   Send,[m
+   UserCheck,[m
+ } from 'lucide-react'[m
+[32m+[m[32mimport { useNavigate } from 'react-router-dom'[m
+ import { useDealerAuth } from '../hooks/useDealerAuth'[m
+[32m+[m[32mimport { api } from '../lib/api'[m
+ import { resolveDealerServiceCenter } from './resolveDealerServiceCenter'[m
+ import type { DealerStaff, WipApproval, WipPhoto, WipStatus, WipStatusHistory, WipTrackingRecord } from '../types/wip'[m
+ import {[m
+[36m@@ -59,8 +61,52 @@[m [mconst emptyRecordForm = {[m
+   notes: '',[m
+ }[m
+ [m
+[32m+[m
+[32m+[m[32mconst emptyWalkInForm = {[m
+[32m+[m[32m  customerName: '',[m
+[32m+[m[32m  customerPhone: '',[m
+[32m+[m[32m  registrationNo: '',[m
+[32m+[m[32m  complaint: '',[m
+[32m+[m[32m  serviceType: '',[m
+[32m+[m[32m  advisorName: '',[m
+[32m+[m[32m  technicianName: '',[m
+[32m+[m[32m  bayNumber: '',[m
+[32m+[m[32m  odometerKm: '',[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mtype WalkInUploadFile = {[m
+[32m+[m[32m  fileName: string[m
+[32m+[m[32m  mimeType: 'application/pdf' | 'image/jpeg' | 'image/png' | 'image/webp'[m
+[32m+[m[32m  base64: string[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mtype WalkInJobCardResponse = {[m
+[32m+[m[32m  id: string[m
+[32m+[m[32m  number: string[m
+[32m+[m[32m  customer?: { fullName?: string | null; phone?: string | null }[m
+[32m+[m[32m  vehicle?: { registrationNo?: string | null }[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mtype ExtractJobCardResponse = {[m
+[32m+[m[32m  customerName?: string[m
+[32m+[m[32m  customerPhone?: string[m
+[32m+[m[32m  registrationNo?: string[m
+[32m+[m[32m  extractionMethod?: string[m
+[32m+[m[32m  message?: string[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mfunction fileToBase64(file: File) {[m
+[32m+[m[32m  return new Promise<string>((resolve, reject) => {[m
+[32m+[m[32m    const reader = new FileReader()[m
+[32m+[m[32m    reader.onload = () => resolve(String(reader.result || ''))[m
+[32m+[m[32m    reader.onerror = () => reject(new Error('Could not read uploaded job card file.'))[m
+[32m+[m[32m    reader.readAsDataURL(file)[m
+[32m+[m[32m  })[m
+[32m+[m[32m}[m
+[32m+[m
+ export default function WipWorkflowPage() {[m
+   const { user } = useDealerAuth()[m
+[32m+[m[32m  const navigate = useNavigate()[m
+   const [center, setCenter] = useState<DealerCenter | null>(null)[m
+   const [records, setRecords] = useState<WipTrackingRecord[]>([])[m
+   const [history, setHistory] = useState<WipStatusHistory[]>([])[m
+[36m@@ -81,6 +127,12 @@[m [mexport default function WipWorkflowPage() {[m
+   const [approvalForm, setApprovalForm] = useState({ title: 'Additional work approval', description: '', estimate_amount: '' })[m
+   const [photoForm, setPhotoForm] = useState({ photo_type: 'inspection' as WipPhoto['photo_type'], photo_url: '', caption: '', customer_visible: true })[m
+   const [selectedTechnicianId, setSelectedTechnicianId] = useState('')[m
+[32m+[m[32m  const [showWalkInForm, setShowWalkInForm] = useState(false)[m
+[32m+[m[32m  const [walkInForm, setWalkInForm] = useState(emptyWalkInForm)[m
+[32m+[m[32m  const [walkInFile, setWalkInFile] = useState<WalkInUploadFile | null>(null)[m
+[32m+[m[32m  const [walkInFileName, setWalkInFileName] = useState('')[m
+[32m+[m[32m  const [extractingJobCard, setExtractingJobCard] = useState(false)[m
+[32m+[m[32m  const [extractMessage, setExtractMessage] = useState('')[m
+ [m
+   useEffect(() => {[m
+     if (!user) return[m
+[36m@@ -147,6 +199,98 @@[m [mexport default function WipWorkflowPage() {[m
+     return matchesSearch && matchesStatus[m
+   })[m
+ [m
+[32m+[m
+[32m+[m[32m  const handleWalkInFile = async (event: ChangeEvent<HTMLInputElement>) => {[m
+[32m+[m[32m    const file = event.target.files?.[0][m
+[32m+[m[32m    if (!file) {[m
+[32m+[m[32m      setWalkInFile(null)[m
+[32m+[m[32m      setWalkInFileName('')[m
+[32m+[m[32m      return[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    const allowed = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp'][m
+[32m+[m[32m    if (!allowed.includes(file.type)) {[m
+[32m+[m[32m      setError('Upload only PDF, JPG, PNG, or WEBP job card files.')[m
+[32m+[m[32m      event.target.value = ''[m
+[32m+[m[32m      return[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    if (file.size > 5 * 1024 * 1024) {[m
+[32m+[m[32m      setError('Uploaded job card file must be under 5 MB.')[m
+[32m+[m[32m      event.target.value = ''[m
+[32m+[m[32m      return[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    const base64 = await fileToBase64(file)[m
+[32m+[m[32m    const dealerJobCardFile = { fileName: file.name, mimeType: file.type as WalkInUploadFile['mimeType'], base64 }[m
+[32m+[m[32m    setWalkInFile(dealerJobCardFile)[m
+[32m+[m[32m    setWalkInFileName(file.name)[m
+[32m+[m[32m    setExtractMessage('')[m
+[32m+[m
+[32m+[m[32m    setExtractingJobCard(true)[m
+[32m+[m[32m    try {[m
+[32m+[m[32m      const extracted = await api.post<ExtractJobCardResponse>('/api/job-cards/extract', { dealerJobCardFile })[m
+[32m+[m
+[32m+[m[32m      setWalkInForm(current => ({[m
+[32m+[m[32m        ...current,[m
+[32m+[m[32m        customerName: extracted.customerName?.trim() || current.customerName,[m
+[32m+[m[32m        customerPhone: extracted.customerPhone?.trim() || current.customerPhone,[m
+[32m+[m[32m        registrationNo: extracted.registrationNo?.trim().toUpperCase() || current.registrationNo,[m
+[32m+[m[32m      }))[m
+[32m+[m
+[32m+[m[32m      setExtractMessage(extracted.message || 'Extraction completed. Please verify the details before creating tracking.')[m
+[32m+[m[32m    } catch (e) {[m
+[32m+[m[32m      setExtractMessage((e as Error).message || 'Could not extract details. Please enter them manually.')[m
+[32m+[m[32m    }[m
+[32m+[m[32m    setExtractingJobCard(false)[m
+[32m+[m[32m  }[m
+[32m+[m
+[32m+[m[32m  const createWalkInTracking = async (event: FormEvent) => {[m
+[32m+[m[32m    event.preventDefault()[m
+[32m+[m[32m    if (!center) return[m
+[32m+[m
+[32m+[m[32m    const customerName = walkInForm.customerName.trim()[m
+[32m+[m[32m    const customerPhone = walkInForm.customerPhone.trim()[m
+[32m+[m[32m    const registrationNo = walkInForm.registrationNo.trim().toUpperCase()[m
+[32m+[m
+[32m+[m[32m    if (!customerName || !customerPhone || !registrationNo) {[m
+[32m+[m[32m      setError('Customer name, phone number, and registration number are required.')[m
+[32m+[m[32m      return[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    setSaving(true)[m
+[32m+[m[32m    setError('')[m
+[32m+[m[32m    setSuccess('')[m
+[32m+[m
+[32m+[m[32m    try {[m
+[32m+[m[32m      const created = await api.post<WalkInJobCardResponse>('/api/job-cards/walk-in', {[m
+[32m+[m[32m        dealerId: center.id,[m
+[32m+[m[32m        customerName,[m
+[32m+[m[32m        customerPhone,[m
+[32m+[m[32m        customerCity: center.city,[m
+[32m+[m[32m        registrationNo,[m
+[32m+[m[32m        complaint: walkInForm.complaint.trim() || 'Walk-in service tracking',[m
+[32m+[m[32m        serviceType: walkInForm.serviceType.trim() || 'walk_in',[m
+[32m+[m[32m        advisorName: walkInForm.advisorName.trim() || undefined,[m
+[32m+[m[32m        technicianName: walkInForm.technicianName.trim() || undefined,[m
+[32m+[m[32m        bayNumber: walkInForm.bayNumber ? Number(walkInForm.bayNumber) : undefined,[m
+[32m+[m[32m        odometerKm: walkInForm.odometerKm ? Number(walkInForm.odometerKm) : undefined,[m
+[32m+[m[32m        dealerJobCardFile: walkInFile || undefined,[m
+[32m+[m[32m      })[m
+[32m+[m
+[32m+[m[32m      setWalkInForm(emptyWalkInForm)[m
+[32m+[m[32m      setWalkInFile(null)[m
+[32m+[m[32m      setWalkInFileName('')[m
+[32m+[m[32m      setShowWalkInForm(false)[m
+[32m+[m[32m      setSuccess(`Walk-in BikeAI tracking created: ${created.number}.`)[m
+[32m+[m[32m      navigate(`/dealer/job-cards/${encodeURIComponent(created.id)}`)[m
+[32m+[m[32m    } catch (e) {[m
+[32m+[m[32m      setError((e as Error).message || 'Could not create walk-in tracking.')[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    setSaving(false)[m
+[32m+[m[32m  }[m
+[32m+[m
+   const createRecord = async (event: FormEvent) => {[m
+     event.preventDefault()[m
+     if (!center) return[m
+[36m@@ -327,14 +471,62 @@[m [mexport default function WipWorkflowPage() {[m
+           <h1 style={s.title}>Service WIP Tracking</h1>[m
+           <p style={s.subTitle}>{center.name} - BikeAI tracking records linked to dealer DMS job numbers.</p>[m
+         </div>[m
+[31m-        <button style={s.secondaryBtn} onClick={() => loadData(center.id)} disabled={saving}>[m
+[31m-          <RefreshCw size={15} /> Refresh[m
+[31m-        </button>[m
+[32m+[m[32m        <div style={s.headerActions}>[m
+[32m+[m[32m          <button style={s.primaryBtn} onClick={() => setShowWalkInForm(value => !value)} disabled={saving}>[m
+[32m+[m[32m            <Plus size={15} /> Create Walk-in Tracking[m
+[32m+[m[32m          </button>[m
+[32m+[m[32m          <button style={s.secondaryBtn} onClick={() => loadData(center.id)} disabled={saving}>[m
+[32m+[m[32m            <RefreshCw size={15} /> Refresh[m
+[32m+[m[32m          </button>[m
+[32m+[m[32m        </div>[m
+       </div>[m
+ [m
+       {error && <div style={s.error}><AlertTriangle size={16} /> {error}</div>}[m
+       {success && <div style={s.success}><CheckCircle2 size={16} /> {success}</div>}[m
+ [m
+[32m+[m
+[32m+[m[32m      {showWalkInForm && ([m
+[32m+[m[32m        <section style={s.walkInPanel}>[m
+[32m+[m[32m          <div style={s.panelHead}>[m
+[32m+[m[32m            <div>[m
+[32m+[m[32m              <h2 style={s.panelTitle}><QrCode size={16} /> Create Walk-in BikeAI Tracking</h2>[m
+[32m+[m[32m              <p style={s.panelHint}>Upload dealer job card PDF/image if available. If not available, enter customer and vehicle details manually.</p>[m
+[32m+[m[32m            </div>[m
+[32m+[m[32m          </div>[m
+[32m+[m[32m          <form onSubmit={createWalkInTracking} style={s.formGrid}>[m
+[32m+[m[32m            <Field label="Customer Name" value={walkInForm.customerName} required onChange={value => setWalkInForm({ ...walkInForm, customerName: value })} />[m
+[32m+[m[32m            <Field label="Phone / WhatsApp Number" value={walkInForm.customerPhone} required onChange={value => setWalkInForm({ ...walkInForm, customerPhone: value })} />[m
+[32m+[m[32m            <Field label="Registration Number" value={walkInForm.registrationNo} required onChange={value => setWalkInForm({ ...walkInForm, registrationNo: value.toUpperCase() })} />[m
+[32m+[m[32m            <Field label="Service Type" value={walkInForm.serviceType} onChange={value => setWalkInForm({ ...walkInForm, serviceType: value })} />[m
+[32m+[m[32m            <Field label="Advisor" value={walkInForm.advisorName} onChange={value => setWalkInForm({ ...walkInForm, advisorName: value })} />[m
+[32m+[m[32m            <Field label="Technician" value={walkInForm.technicianName} onChange={value => setWalkInForm({ ...walkInForm, technicianName: value })} />[m
+[32m+[m[32m            <label style={s.field}>[m
+[32m+[m[32m              Ramp / Bay Number[m
+[32m+[m[32m              <select value={walkInForm.bayNumber} onChange={event => setWalkInForm({ ...walkInForm, bayNumber: event.target.value })} style={s.input}>[m
+[32m+[m[32m                <option value="">Select ramp / bay</option>[m
+[32m+[m[32m                {Array.from({ length: 12 }, (_, i) => i + 1).map(n => <option key={n} value={n}>Bay {n}</option>)}[m
+[32m+[m[32m              </select>[m
+[32m+[m[32m            </label>[m
+[32m+[m[32m            <Field label="Odometer KM" value={walkInForm.odometerKm} type="number" onChange={value => setWalkInForm({ ...walkInForm, odometerKm: value })} />[m
+[32m+[m[32m            <label style={s.fullField}>[m
+[32m+[m[32m              Dealer Job Card PDF/Image[m
+[32m+[m[32m              <input type="file" accept="application/pdf,image/png,image/jpeg,image/webp" onChange={handleWalkInFile} style={s.input} />[m
+[32m+[m[32m              <span style={s.fileHint}>{walkInFileName || 'Optional. Upload PDF/JPG/PNG/WEBP under 5 MB.'}</span>[m
+[32m+[m[32m            </label>[m
+[32m+[m[32m            <label style={s.fullField}>[m
+[32m+[m[32m              Complaint / Intake Notes[m
+[32m+[m[32m              <textarea value={walkInForm.complaint} onChange={event => setWalkInForm({ ...walkInForm, complaint: event.target.value })} style={s.textarea} />[m
+[32m+[m[32m            </label>[m
+[32m+[m[32m            <div style={s.buttonRow}>[m
+[32m+[m[32m              <button style={s.primaryBtn} disabled={saving}>[m
+[32m+[m[32m                <Save size={14} /> Create BikeAI Tracking[m
+[32m+[m[32m              </button>[m
+[32m+[m[32m              <button type="button" style={s.secondaryBtn} onClick={() => setShowWalkInForm(false)} disabled={saving}>Cancel</button>[m
+[32m+[m[32m            </div>[m
+[32m+[m[32m          </form>[m
+[32m+[m[32m        </section>[m
+[32m+[m[32m      )}[m
+[32m+[m
+       <div style={s.kpiGrid}>[m
+         <Metric label="Active WIP" value={metrics.active} color="#2563EB" />[m
+         <Metric label="Approval Pending" value={metrics.pendingApproval} color="#DC2626" />[m
+[36m@@ -567,6 +759,7 @@[m [mfunction formatDateTime(value?: string | null) {[m
+ const s: Record<string, React.CSSProperties> = {[m
+   root: { display: 'grid', gap: '18px', fontFamily: '"Inter", system-ui, sans-serif', color: '#0F172A' },[m
+   header: { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px', flexWrap: 'wrap' },[m
+[32m+[m[32m  headerActions: { display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' },[m
+   title: { margin: 0, color: '#0B1F4D', fontSize: '24px', fontWeight: 900 },[m
+   subTitle: { margin: '5px 0 0', color: '#64748B', fontSize: '13px' },[m
+   error: { display: 'flex', alignItems: 'center', gap: '8px', background: '#FEF2F2', color: '#B91C1C', border: '1px solid #FECACA', borderRadius: '8px', padding: '10px 12px', fontSize: '13px' },[m
+[36m@@ -581,6 +774,7 @@[m [mconst s: Record<string, React.CSSProperties> = {[m
+   mainGrid: { display: 'grid', gridTemplateColumns: 'minmax(320px, 0.95fr) minmax(360px, 1.05fr)', gap: '16px', alignItems: 'start' },[m
+   detailGrid: { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(300px, 1fr))', gap: '16px', alignItems: 'start' },[m
+   panel: { background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '8px', padding: '16px', boxShadow: '0 1px 3px rgba(15,23,42,0.05)' },[m
+[32m+[m[32m  walkInPanel: { background: '#FFFFFF', border: '1px solid #FDE68A', borderRadius: '10px', padding: '16px', boxShadow: '0 8px 24px rgba(15,23,42,0.08)' },[m
+   panelWide: { gridColumn: '1 / -1', background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '8px', padding: '16px', boxShadow: '0 1px 3px rgba(15,23,42,0.05)' },[m
+   panelHead: { display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px', marginBottom: '12px' },[m
+   panelTitle: { margin: 0, display: 'flex', alignItems: 'center', gap: '8px', fontSize: '16px', color: '#0B1F4D' },[m
+[36m@@ -592,6 +786,7 @@[m [mconst s: Record<string, React.CSSProperties> = {[m
+   input: { width: '100%', border: '1px solid #CBD5E1', borderRadius: '8px', padding: '9px 10px', font: 'inherit', fontSize: '13px', outline: 'none', background: '#FFFFFF' },[m
+   select: { border: '1px solid #CBD5E1', borderRadius: '8px', padding: '9px 10px', font: 'inherit', fontSize: '13px', background: '#FFFFFF' },[m
+   textarea: { width: '100%', minHeight: '72px', border: '1px solid #CBD5E1', borderRadius: '8px', padding: '9px 10px', font: 'inherit', fontSize: '13px', resize: 'vertical' },[m
+[32m+[m[32m  fileHint: { color: '#64748B', fontSize: '11px', fontWeight: 700 },[m
+   primaryBtn: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', border: 0, borderRadius: '8px', background: '#0B1F4D', color: '#FFFFFF', padding: '9px 13px', font: 'inherit', fontSize: '13px', fontWeight: 800, cursor: 'pointer' },[m
+   secondaryBtn: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', border: '1px solid #CBD5E1', borderRadius: '8px', background: '#FFFFFF', color: '#0B1F4D', padding: '8px 12px', font: 'inherit', fontSize: '13px', fontWeight: 800, cursor: 'pointer' },[m
+   whatsAppBtn: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', border: '1px solid #BBF7D0', borderRadius: '8px', background: '#DCFCE7', color: '#15803D', padding: '8px 12px', font: 'inherit', fontSize: '13px', fontWeight: 800, cursor: 'pointer' },[m

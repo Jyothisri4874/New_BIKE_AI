@@ -1,0 +1,410 @@
+// BikeAI Prisma schema (MySQL) — Phase 1 MVP
+// Ported from the original Supabase Postgres schema.
+// IDs are CUIDs (string) so the model maps cleanly from the existing UUID model.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  admin
+  dealer
+  customer
+  technician
+  service_advisor
+  crm_executive
+}
+
+enum DealerStatus {
+  pending
+  active
+  suspended
+  rejected
+}
+
+enum BookingStatus {
+  pending
+  confirmed
+  in_progress
+  ready_for_delivery
+  completed
+  cancelled
+}
+
+enum JobCardStatus {
+  open
+  in_progress
+  qc
+  ready
+  delivered
+  cancelled
+}
+
+enum JobItemKind {
+  labour
+  part
+}
+
+enum InvoiceStatus {
+  draft
+  issued
+  paid
+  void
+}
+
+enum PaymentMethod {
+  cash
+  upi
+  card
+  wallet
+  bank
+}
+
+enum ApprovalStatus {
+  pending
+  approved
+  rejected
+  expired
+}
+
+// ──────────────────────────── Identity ────────────────────────────
+
+model User {
+  id           String    @id @default(cuid())
+  email        String?   @unique
+  phone        String?   @unique
+  passwordHash String?
+  fullName     String?
+  avatarUrl    String?
+  role         UserRole  @default(customer)
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  customer        Customer?
+  dealerOwnerOf   Dealer[]       @relation("DealerOwner")
+  staffOfDealerId String?
+  staffOfDealer   Dealer?        @relation("DealerStaff", fields: [staffOfDealerId], references: [id])
+  jobCardsAsTech  JobCard[]      @relation("TechnicianJobs")
+  jobCardsAsAdv   JobCard[]      @relation("AdvisorJobs")
+
+  @@index([role])
+  @@index([staffOfDealerId])
+}
+
+// ──────────────────────────── Dealers / Service Centers ────────────
+
+model Dealer {
+  id              String        @id @default(cuid())
+  ownerId         String?
+  owner           User?         @relation("DealerOwner", fields: [ownerId], references: [id])
+  name            String
+  address         String?       @db.Text
+  city            String?
+  state           String?
+  pincode         String?
+  phone           String?
+  email           String?
+  gstNumber       String?
+  description     String?       @db.Text
+  logoUrl         String?
+  status          DealerStatus  @default(pending)
+  rating          Float         @default(0)
+  totalReviews    Int           @default(0)
+  brands          Json?
+  services        Json?
+  openTime        String?
+  closeTime       String?
+  lat             Float?
+  lng             Float?
+  isActive        Boolean       @default(true)
+  workshopType    String?
+  isEvCapable     Boolean       @default(false)
+  isRsaEnabled    Boolean       @default(false)
+  isPickupEnabled Boolean       @default(false)
+  isExpressCenter Boolean       @default(false)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  staff     User[]    @relation("DealerStaff")
+  bookings  Booking[]
+  jobCards  JobCard[]
+  invoices  Invoice[]
+  customers Customer[]
+
+  @@index([city])
+  @@index([status])
+}
+
+// ──────────────────────────── Customer & Vehicles ──────────────────
+
+model Customer {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName    String
+  phone       String
+  email       String?
+  city        String?
+  pincode     String?
+  address     String?  @db.Text
+  preferredDealerId String?
+  preferredDealer   Dealer? @relation(fields: [preferredDealerId], references: [id])
+  loyaltyScore Int     @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  vehicles Vehicle[]
+  bookings Booking[]
+  jobCards JobCard[]
+  invoices Invoice[]
+
+  @@index([phone])
+  @@index([preferredDealerId])
+}
+
+model VehicleOem {
+  id        String  @id @default(cuid())
+  name      String  @unique
+  logoUrl   String?
+  isActive  Boolean @default(true)
+  models    VehicleModel[]
+}
+
+model VehicleModel {
+  id        String  @id @default(cuid())
+  oemId     String
+  oem       VehicleOem @relation(fields: [oemId], references: [id])
+  name      String
+  segment   String?
+  fuelType  String?
+  isActive  Boolean @default(true)
+  variants  VehicleVariant[]
+
+  @@unique([oemId, name])
+}
+
+model VehicleVariant {
+  id        String  @id @default(cuid())
+  modelId   String
+  model     VehicleModel @relation(fields: [modelId], references: [id])
+  name      String
+  year      Int?
+  isActive  Boolean @default(true)
+
+  @@unique([modelId, name, year])
+}
+
+model Vehicle {
+  id              String   @id @default(cuid())
+  customerId      String
+  customer        Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  oemId           String?
+  modelId         String?
+  variantId       String?
+  registrationNo  String?  @unique
+  chassisNo       String?
+  engineNo        String?
+  manufactureYear Int?
+  fuelType        String?
+  colour          String?
+  odometerKm      Int?
+  insuranceExpiry DateTime?
+  pucExpiry       DateTime?
+  amcExpiry       DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  bookings Booking[]
+  jobCards JobCard[]
+
+  @@index([customerId])
+  @@index([registrationNo])
+}
+
+// ──────────────────────────── Bookings & Job Cards ─────────────────
+
+model Booking {
+  id             String        @id @default(cuid())
+  customerId     String
+  customer       Customer      @relation(fields: [customerId], references: [id])
+  dealerId       String
+  dealer         Dealer        @relation(fields: [dealerId], references: [id])
+  vehicleId      String?
+  vehicle        Vehicle?      @relation(fields: [vehicleId], references: [id])
+  serviceType    String
+  scheduledAt    DateTime
+  status         BookingStatus @default(pending)
+  notes          String?       @db.Text
+  reportedIssues Json?
+  estimatedCost  Decimal       @default(0) @db.Decimal(12, 2)
+  finalCost      Decimal       @default(0) @db.Decimal(12, 2)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  jobCard  JobCard?
+  timeline BookingTimeline[]
+
+  @@index([dealerId, status])
+  @@index([customerId])
+  @@index([scheduledAt])
+}
+
+model BookingTimeline {
+  id        String   @id @default(cuid())
+  bookingId String
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  event     String
+  note      String?  @db.Text
+  actorId   String?
+  createdAt DateTime @default(now())
+
+  @@index([bookingId])
+}
+
+model JobCard {
+  id              String        @id @default(cuid())
+  number          String        @unique
+  bookingId       String?       @unique
+  booking         Booking?      @relation(fields: [bookingId], references: [id])
+  dealerId        String
+  dealer          Dealer        @relation(fields: [dealerId], references: [id])
+  customerId      String
+  customer        Customer      @relation(fields: [customerId], references: [id])
+  vehicleId       String
+  vehicle         Vehicle       @relation(fields: [vehicleId], references: [id])
+  advisorId       String?
+  advisor         User?         @relation("AdvisorJobs", fields: [advisorId], references: [id])
+  technicianId    String?
+  technician      User?         @relation("TechnicianJobs", fields: [technicianId], references: [id])
+  status          JobCardStatus @default(open)
+  priority        Int           @default(3)
+  odometerKm      Int?
+  fuelLevel       String?
+  complaint       String?       @db.Text
+  estimateTotal   Decimal       @default(0) @db.Decimal(12, 2)
+  estimatedReady  DateTime?
+  closedAt        DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  items     JobCardItem[]
+  approvals AdditionalWorkApproval[]
+  invoice   Invoice?
+
+  @@index([dealerId, status])
+  @@index([customerId])
+  @@index([technicianId])
+}
+
+model JobCardItem {
+  id          String      @id @default(cuid())
+  jobCardId   String
+  jobCard     JobCard     @relation(fields: [jobCardId], references: [id], onDelete: Cascade)
+  kind        JobItemKind
+  name        String
+  partNumber  String?
+  quantity    Decimal     @default(1) @db.Decimal(10, 2)
+  unitPrice   Decimal     @default(0) @db.Decimal(12, 2)
+  taxPercent  Decimal     @default(0) @db.Decimal(5, 2)
+  total       Decimal     @default(0) @db.Decimal(12, 2)
+  createdAt   DateTime    @default(now())
+
+  @@index([jobCardId])
+}
+
+model AdditionalWorkApproval {
+  id          String         @id @default(cuid())
+  jobCardId   String
+  jobCard     JobCard        @relation(fields: [jobCardId], references: [id], onDelete: Cascade)
+  description String         @db.Text
+  estimate    Decimal        @default(0) @db.Decimal(12, 2)
+  mediaUrls   Json?
+  status      ApprovalStatus @default(pending)
+  channel     String?
+  approvedAt  DateTime?
+  createdAt   DateTime       @default(now())
+
+  @@index([jobCardId])
+}
+
+// ──────────────────────────── Billing ───────────────────────────────
+
+model Invoice {
+  id            String        @id @default(cuid())
+  number        String        @unique
+  jobCardId     String?       @unique
+  jobCard       JobCard?      @relation(fields: [jobCardId], references: [id])
+  dealerId      String
+  dealer        Dealer        @relation(fields: [dealerId], references: [id])
+  customerId    String
+  customer      Customer      @relation(fields: [customerId], references: [id])
+  subtotal      Decimal       @default(0) @db.Decimal(12, 2)
+  taxAmount     Decimal       @default(0) @db.Decimal(12, 2)
+  discount      Decimal       @default(0) @db.Decimal(12, 2)
+  total         Decimal       @default(0) @db.Decimal(12, 2)
+  status        InvoiceStatus @default(draft)
+  issuedAt      DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  payments Payment[]
+
+  @@index([dealerId, status])
+  @@index([customerId])
+}
+
+model Payment {
+  id         String        @id @default(cuid())
+  invoiceId  String
+  invoice    Invoice       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  amount     Decimal       @db.Decimal(12, 2)
+  method     PaymentMethod
+  reference  String?
+  paidAt     DateTime      @default(now())
+  createdAt  DateTime      @default(now())
+
+  @@index([invoiceId])
+}
+
+model ServiceBikeaiCustomerVehicleTracking {
+  id                   String   @id @default(cuid())
+  serviceCenterId      String   @map("service_center_id")
+  dealerDmsJobNo       String   @map("dealer_dms_job_no")
+  customerName         String   @map("customer_name")
+  customerMobile       String   @map("customer_mobile")
+  vehicleNumber        String   @map("vehicle_number")
+  vehicleModel         String?  @map("vehicle_model")
+  serviceType          String   @map("service_type")
+  customerComplaint    String?  @db.Text @map("customer_complaint")
+  currentStatus        String   @default("received") @map("current_status")
+  trackingCode         String   @unique @map("tracking_code")
+  trackingUrl          String   @db.Text @map("tracking_url")
+  qrCodeUrl            String?  @db.Text @map("qr_code_url")
+  pdfUrl               String?  @db.Text @map("pdf_url")
+  assignedAdvisorId    String?  @map("assigned_advisor_id")
+  assignedTechnicianId String?  @map("assigned_technician_id")
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+
+  @@unique([serviceCenterId, dealerDmsJobNo])
+  @@index([serviceCenterId, currentStatus])
+  @@index([trackingCode])
+  @@map("service_bikeai_customer_vehicle_tracking")
+}
+
+model CustomerOtp {
+  id         String    @id @default(cuid())
+  phone      String
+  code       String
+  expiresAt  DateTime
+  verifiedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@index([phone])
+}

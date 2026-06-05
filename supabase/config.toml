@@ -1,0 +1,11 @@
+[functions.ai-chat]
+verify_jwt = true
+
+[functions.twilio-send]
+verify_jwt = true
+
+[functions.dealer-search]
+verify_jwt = false
+
+[functions.maps-nearby]
+verify_jwt = false
