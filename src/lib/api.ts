@@ -136,6 +136,59 @@ export interface ChatResponse {
   role: AssistantRole
 }
 
+export interface ChatBackupSession {
+  id: string
+  source: string
+  chatbotType: string
+  userId?: string | null
+  customerId?: string | null
+  sessionKey?: string | null
+  location?: unknown
+  createdAt: string
+  updatedAt: string
+}
+
+export interface ChatBackupMessage {
+  id: string
+  sessionId: string
+  sender: string
+  message: string
+  source: string
+  chatbotType: string
+  userId?: string | null
+  customerId?: string | null
+  location?: unknown
+  createdAt: string
+}
+
+export interface ChatBackupHistoryResponse {
+  session: ChatBackupSession | null
+  messages: ChatBackupMessage[]
+  total: number
+}
+
+export interface ChatBackupRequest {
+  sessionId?: string | null
+  sessionKey?: string | null
+  source: string
+  chatbotType: string
+  sender: string
+  message: string
+  userId?: string | null
+  customerId?: string | null
+  location?: unknown
+}
+
+export interface ChatBackupHistoryParams {
+  sessionId?: string | null
+  sessionKey?: string | null
+  source: string
+  chatbotType: string
+  userId?: string | null
+  customerId?: string | null
+  limit?: number
+}
+
 export interface NearbyPlace {
   name: string
   vicinity: string
@@ -246,6 +299,56 @@ export function aiChat(
   token?: string,
 ) {
   return api.post<ChatResponse>("/api/ai-chat", { messages, ...opts }, token)
+}
+
+export function getChatBackupIdentity(customerId?: string | null) {
+  const stored = getStoredAuth()
+  const resolvedCustomerId = customerId || (stored?.profile?.role === "customer" ? stored.profile.id : undefined)
+  const userId = stored?.user?.id || undefined
+  return {
+    userId,
+    customerId: resolvedCustomerId,
+    identity: resolvedCustomerId || userId || "anonymous",
+  }
+}
+
+export function getChatBackupSessionKey(source: string, chatbotType: string, identity: string) {
+  const fallback = `${source}:${chatbotType}:${identity}`
+  if (typeof window === "undefined") return fallback
+  try {
+    const storageKey = `bikeai_chat_session_${source}_${chatbotType}_${identity}`.replace(/[^a-zA-Z0-9_.:-]/g, "_")
+    let value = window.localStorage.getItem(storageKey)
+    if (!value) {
+      const randomId = typeof crypto !== "undefined" && "randomUUID" in crypto
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(36).slice(2)}`
+      value = `${source}:${chatbotType}:${identity}:${randomId}`
+      window.localStorage.setItem(storageKey, value)
+    }
+    return value
+  } catch {
+    return fallback
+  }
+}
+
+export function loadChatBackupHistory(params: ChatBackupHistoryParams, token?: string) {
+  const qs = new URLSearchParams()
+  if (params.sessionId) qs.set("sessionId", params.sessionId)
+  if (params.sessionKey) qs.set("sessionKey", params.sessionKey)
+  qs.set("source", params.source)
+  qs.set("chatbotType", params.chatbotType)
+  if (params.userId) qs.set("userId", params.userId)
+  if (params.customerId) qs.set("customerId", params.customerId)
+  if (params.limit) qs.set("limit", String(params.limit))
+  return api.get<ChatBackupHistoryResponse>(`/api/chat-backups?${qs.toString()}`, token)
+}
+
+export function saveChatBackupMessage(req: ChatBackupRequest, token?: string) {
+  return api.post<{ session: ChatBackupSession; message: ChatBackupMessage }>("/api/chat-backups/messages", req, token)
+}
+
+export function clearChatBackupSession(sessionId: string, token?: string) {
+  return api.delete<void>(`/api/chat-backups/${encodeURIComponent(sessionId)}`, token)
 }
 
 // ─── Google Maps ──────────────────────────────────────────────────────────────

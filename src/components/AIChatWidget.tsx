@@ -1,6 +1,15 @@
 import { useState, useRef, useEffect } from 'react'
 import { X, Send, Mic, MicOff, Minimize2, Maximize2, Bot, User, Loader, Zap, Wrench, Users, ChartBar as BarChart2, ClipboardList, ShoppingBag, Volume2, VolumeX } from 'lucide-react'
-import { api, type ChatMessage, type AssistantRole } from '@/lib/api'
+import {
+  api,
+  clearChatBackupSession,
+  getChatBackupIdentity,
+  getChatBackupSessionKey,
+  loadChatBackupHistory,
+  saveChatBackupMessage,
+  type ChatMessage,
+  type AssistantRole,
+} from '@/lib/api'
 import { getCustomerCopy, speechLocaleForLanguage, type CustomerLanguage } from '../lib/customerLanguage'
 
 // ── Role configuration ────────────────────────────────────────────────────────
@@ -189,6 +198,7 @@ export default function AIChatWidget({ role = 'assistant', context, placeholder,
   const [loading, setLoading]   = useState(false)
   const [listening, setListening] = useState(false)
   const [voiceReply, setVoiceReply] = useState(false)
+  const [backupSessionId, setBackupSessionId] = useState<string | null>(null)
 
   const endRef    = useRef<HTMLDivElement>(null)
   const inputRef  = useRef<HTMLInputElement>(null)
@@ -203,9 +213,34 @@ export default function AIChatWidget({ role = 'assistant', context, placeholder,
     context,
     role === 'customer' ? `Customer preferred language: ${customerCopy.languageName}. ${customerCopy.replyLanguageInstruction}` : '',
   ].filter(Boolean).join('\n')
+  const backupSource = crmContext?.serviceCenterId ? 'crm_service_chat' : 'ai_chat'
+  const backupIdentity = getChatBackupIdentity(crmContext?.customerId)
+  const backupSessionKey = getChatBackupSessionKey(backupSource, role, backupIdentity.identity)
+  const backupLocation = crmContext ? {
+    serviceCenterId: crmContext.serviceCenterId,
+    jobCardId: crmContext.jobCardId,
+    bookingId: crmContext.bookingId,
+    visibility: crmContext.visibility,
+  } : undefined
 
-  // Reset conversation history when role changes (isolation guarantee)
-  useEffect(() => { setMessages([]) }, [role])
+  useEffect(() => {
+    let active = true
+    setMessages([])
+    setBackupSessionId(null)
+    loadChatBackupHistory({
+      source: backupSource,
+      chatbotType: role,
+      sessionKey: backupSessionKey,
+      userId: backupIdentity.userId,
+      customerId: backupIdentity.customerId,
+      limit: 100,
+    }).then(history => {
+      if (!active) return
+      setBackupSessionId(history.session?.id ?? null)
+      if (history.messages.length) setMessages(history.messages.map(toWidgetMessage))
+    }).catch(() => {})
+    return () => { active = false }
+  }, [backupSource, role, backupSessionKey, backupIdentity.userId, backupIdentity.customerId])
 
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages])
   useEffect(() => { if (open) setTimeout(() => inputRef.current?.focus(), 100) }, [open])
@@ -226,6 +261,7 @@ export default function AIChatWidget({ role = 'assistant', context, placeholder,
     ]
 
     try {
+      const activeSessionId = await persistBackupMessage('user', text.trim())
       const response = await api.post<{ reply?: string; message?: string }>('/api/ai-chat', {
         messages: history,
         context: chatContext || undefined,
@@ -240,18 +276,44 @@ export default function AIChatWidget({ role = 'assistant', context, placeholder,
 
       speakAssistant(assistantText)
 
+      await persistBackupMessage('assistant', assistantText, activeSessionId)
       await persistCrmChatMemory(text.trim(), assistantText, role, crmContext)
     } catch {
+      const fallback = 'Sorry, I could not connect. Please try again.'
       setMessages(prev =>
         prev.map(m => m.id === assistantId
-          ? { ...m, content: 'Sorry, I could not connect. Please try again.' }
+          ? { ...m, content: fallback }
           : m
         )
       )
+      await persistBackupMessage('assistant', fallback)
     } finally {
       setMessages(prev => prev.map(m => m.id === assistantId ? { ...m, streaming: false } : m))
       setLoading(false)
     }
+  }
+
+  async function persistBackupMessage(sender: 'user' | 'assistant', message: string, sessionId = backupSessionId) {
+    const saved = await saveChatBackupMessage({
+      sessionId,
+      sessionKey: backupSessionKey,
+      source: backupSource,
+      chatbotType: role,
+      sender,
+      message,
+      userId: backupIdentity.userId,
+      customerId: backupIdentity.customerId,
+      location: backupLocation,
+    }).catch(() => null)
+    if (saved?.session?.id) setBackupSessionId(saved.session.id)
+    return saved?.session?.id || sessionId || undefined
+  }
+
+  function clearChatHistory() {
+    const sessionId = backupSessionId
+    setMessages([])
+    setBackupSessionId(null)
+    if (sessionId) void clearChatBackupSession(sessionId).catch(() => {})
   }
 
   function handleKeyDown(e: React.KeyboardEvent) {
@@ -331,7 +393,7 @@ export default function AIChatWidget({ role = 'assistant', context, placeholder,
             </button>
           )}
           {messages.length > 0 && (
-            <button style={s.iconBtn} onClick={() => setMessages([])} title="Clear chat">
+            <button style={s.iconBtn} onClick={clearChatHistory} title="Clear chat">
               <X size={11} color="rgba(255,255,255,0.5)" />
             </button>
           )}
@@ -455,6 +517,14 @@ export function AIChatPanel({ role = 'assistant', context, placeholder, title, l
       <AIChatWidget role={role} context={context} placeholder={placeholder} title={title} language={language} crmContext={crmContext} />
     </div>
   )
+}
+
+function toWidgetMessage(message: { id: string; sender: string; message: string }): Message {
+  return {
+    id: message.id,
+    role: message.sender === 'user' ? 'user' : 'assistant',
+    content: message.message,
+  }
 }
 
 async function persistCrmChatMemory(userText: string, assistantText: string, role: AssistantRole, crmContext?: Props['crmContext']) {

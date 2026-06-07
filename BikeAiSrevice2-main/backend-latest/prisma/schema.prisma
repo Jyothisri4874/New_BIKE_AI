@@ -72,6 +72,11 @@ enum ApprovalStatus {
   expired
 }
 
+enum ChatBackupSender {
+  user
+  assistant
+}
+
 // ──────────────────────────── Identity ────────────────────────────
 
 model User {
@@ -407,4 +412,32 @@ model CustomerOtp {
   createdAt  DateTime  @default(now())
 
   @@index([phone])
+}
+
+model ChatBackupSession {
+  id          String              @id @default(cuid())
+  sessionKey  String              @unique
+  source      String
+  chatbotType String
+  userId      String?
+  customerId  String?
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  messages    ChatBackupMessage[]
+
+  @@index([source, chatbotType])
+  @@index([userId])
+  @@index([customerId])
+}
+
+model ChatBackupMessage {
+  id        String            @id @default(cuid())
+  sessionId String
+  session   ChatBackupSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  sender    ChatBackupSender
+  message   String            @db.Text
+  location  Json?
+  createdAt DateTime          @default(now())
+
+  @@index([sessionId, createdAt])
 }

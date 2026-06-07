@@ -1,5 +1,15 @@
 import { useState, useRef, useEffect } from 'react'
 import { Bot, X, Send, MapPin, ChevronRight, CircleCheck as CheckCircle, MessageCircle, RotateCcw } from 'lucide-react'
+import {
+  clearChatBackupSession,
+  dealerSearch,
+  getBrowserLocation,
+  getChatBackupIdentity,
+  getChatBackupSessionKey,
+  loadChatBackupHistory,
+  saveChatBackupMessage,
+  type DealerResult,
+} from '../lib/api'
 
 // ── Booking flow data ─────────────────────────────────────────────────────────
 
@@ -27,11 +37,13 @@ const SERVICES = [
   { label: 'Full Inspection', icon: '🔍', desc: '45-point pre/post check' },
 ]
 
-const NEARBY_DEALERS = [
-  { name: 'SpeedFix Auto Works', area: 'Koramangala, Bengaluru', rating: '4.8', eta: '2 km · Free Pickup', slots: '11:00 AM, 2:00 PM' },
-  { name: 'Moto Care Center', area: 'HSR Layout, Bengaluru', rating: '4.6', eta: '3.4 km · Free Pickup', slots: '10:30 AM, 3:00 PM' },
-  { name: 'TwoWheel Experts', area: 'BTM Layout, Bengaluru', rating: '4.7', eta: '4.1 km · Free Pickup', slots: '9:00 AM, 1:00 PM' },
-]
+interface NearbyDealer {
+  name: string
+  area: string
+  rating: string
+  eta: string
+  slots: string
+}
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -62,20 +74,61 @@ export default function BookingChatWidget() {
     { from: 'bot', text: 'Hi! I\'m BikeAI — your smart service assistant.' },
     { from: 'bot', text: 'I can book a service, help in a breakdown, or track your repair. What do you need?' },
   ])
+  const [nearbyDealers, setNearbyDealers] = useState<NearbyDealer[]>([])
   const [locationInput, setLocationInput] = useState('')
   const [freeInput, setFreeInput] = useState('')
+  const [locating, setLocating] = useState(false)
+  const [backupSessionId, setBackupSessionId] = useState<string | null>(null)
   const endRef = useRef<HTMLDivElement>(null)
+  const backupSource = 'booking_chat'
+  const backupChatbotType = 'booking'
+  const backupIdentity = getChatBackupIdentity()
+  const backupSessionKey = getChatBackupSessionKey(backupSource, backupChatbotType, backupIdentity.identity)
+
+  useEffect(() => {
+    let active = true
+    loadChatBackupHistory({
+      source: backupSource,
+      chatbotType: backupChatbotType,
+      sessionKey: backupSessionKey,
+      userId: backupIdentity.userId,
+      customerId: backupIdentity.customerId,
+      limit: 120,
+    }).then(history => {
+      if (!active) return
+      setBackupSessionId(history.session?.id ?? null)
+      if (history.messages.length) setMessages(history.messages.map(toBookingMessage))
+    }).catch(() => {})
+    return () => { active = false }
+  }, [backupSessionKey, backupIdentity.userId, backupIdentity.customerId])
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
-  const addBot = (text: string, component?: React.ReactNode) => {
-    setMessages(prev => [...prev, { from: 'bot', text, component }])
+  const saveBackupMessage = async (sender: 'user' | 'assistant', text: string, location?: unknown) => {
+    const saved = await saveChatBackupMessage({
+      sessionId: backupSessionId,
+      sessionKey: backupSessionKey,
+      source: backupSource,
+      chatbotType: backupChatbotType,
+      sender,
+      message: text,
+      userId: backupIdentity.userId,
+      customerId: backupIdentity.customerId,
+      location,
+    }).catch(() => null)
+    if (saved?.session?.id) setBackupSessionId(saved.session.id)
   }
 
-  const addUser = (text: string) => {
+  const addBot = (text: string, component?: React.ReactNode) => {
+    setMessages(prev => [...prev, { from: 'bot', text, component }])
+    void saveBackupMessage('assistant', text)
+  }
+
+  const addUser = (text: string, location?: unknown) => {
     setMessages(prev => [...prev, { from: 'user', text }])
+    void saveBackupMessage('user', text, location)
   }
 
   const handleChip = (label: string) => {
@@ -144,18 +197,41 @@ export default function BookingChatWidget() {
     }, 300)
   }
 
-  const submitLocation = (loc: string) => {
-    if (!loc.trim()) return
-    addUser(loc)
-    setBooking(prev => ({ ...prev, location: loc }))
+  const submitLocation = async (loc: string, coords?: { lat: number; lng: number }) => {
+    const label = loc.trim()
+    if (!label) return
+    const payload = coords ? { label, lat: coords.lat, lng: coords.lng } : { label }
+    addUser(label, payload)
+    setBooking(prev => ({ ...prev, location: label }))
     setLocationInput('')
+    setNearbyDealers([])
     setStep('dealers')
-    setTimeout(() => {
-      addBot(`Found 3 verified service centers near ${loc}. Choose one:`)
-    }, 500)
+    addBot(`Finding service centers near ${label}...`)
+    try {
+      const dealers = await findNearbyDealers(label, coords)
+      setNearbyDealers(dealers)
+      addBot(dealers.length
+        ? `Found ${dealers.length} verified service center${dealers.length === 1 ? '' : 's'} near ${label}. Choose one:`
+        : `No verified service centers found near ${label}. Try another area.`)
+    } catch {
+      addBot('Could not load nearby service centers. Try another area or check your network.')
+    }
   }
 
-  const selectDealer = (dealer: typeof NEARBY_DEALERS[0], slot: string) => {
+  const detectLocation = async () => {
+    if (locating) return
+    setLocating(true)
+    try {
+      const coords = await getBrowserLocation()
+      await submitLocation('Current location', { lat: coords.latitude, lng: coords.longitude })
+    } catch {
+      addBot('Location permission was not available. Type your area instead.')
+    } finally {
+      setLocating(false)
+    }
+  }
+
+  const selectDealer = (dealer: NearbyDealer, slot: string) => {
     addUser(`${dealer.name} · ${slot}`)
     setBooking(prev => ({ ...prev, dealer: dealer.name, slot }))
     setStep('confirmed')
@@ -169,14 +245,18 @@ export default function BookingChatWidget() {
   }
 
   const resetFlow = () => {
+    const sessionId = backupSessionId
     setStep('idle')
     setBooking({ brand: '', model: '', service: '', location: '', dealer: '', slot: '' })
     setMessages([
       { from: 'bot', text: 'Hi! I\'m BikeAI — your smart service assistant.' },
       { from: 'bot', text: 'I can book a service, help in a breakdown, or track your repair. What do you need?' },
     ])
+    setNearbyDealers([])
     setLocationInput('')
     setFreeInput('')
+    setBackupSessionId(null)
+    if (sessionId) void clearChatBackupSession(sessionId).catch(() => {})
   }
 
   const sendFree = () => {
@@ -263,8 +343,8 @@ export default function BookingChatWidget() {
             onKeyDown={e => e.key === 'Enter' && submitLocation(locationInput)}
             autoFocus
           />
-          <button style={w.locDetect} className="bwc-chip" onClick={() => submitLocation('Current Location')}>
-            <MapPin size={12} /> Detect
+          <button style={{ ...w.locDetect, opacity: locating ? 0.7 : 1 }} className="bwc-chip" onClick={detectLocation} disabled={locating}>
+            <MapPin size={12} /> {locating ? 'Detecting' : 'Detect'}
           </button>
           <button
             style={{ ...w.locSend, opacity: locationInput.trim() ? 1 : 0.4 }}
@@ -279,7 +359,10 @@ export default function BookingChatWidget() {
     if (step === 'dealers') {
       return (
         <div style={w.dealerList}>
-          {NEARBY_DEALERS.map(d => (
+          {nearbyDealers.length === 0 && (
+            <div style={w.emptyDealer}>No nearby centers loaded yet.</div>
+          )}
+          {nearbyDealers.map(d => (
             <div key={d.name} style={w.dealerCard} className="bwc-dealer">
               <div style={w.dealerTop}>
                 <div>
@@ -397,6 +480,34 @@ export default function BookingChatWidget() {
   )
 }
 
+function toBookingMessage(message: { sender: string; message: string }): Message {
+  return {
+    from: message.sender === 'user' ? 'user' : 'bot',
+    text: message.message,
+  }
+}
+
+async function findNearbyDealers(label: string, coords?: { lat: number; lng: number }): Promise<NearbyDealer[]> {
+  const response = await dealerSearch(coords
+    ? { lat: coords.lat, lng: coords.lng, radius_km: 50, limit: 5 }
+    : { city: label, limit: 5 })
+  return response.results.map(toNearbyDealer)
+}
+
+function toNearbyDealer(dealer: DealerResult): NearbyDealer {
+  const distance = typeof dealer.distance_km === 'number'
+    ? `${dealer.distance_km.toFixed(dealer.distance_km < 10 ? 1 : 0)} km`
+    : dealer.city || 'Nearby'
+  const pickup = dealer.is_pickup_available ? 'Pickup available' : 'Visit center'
+  return {
+    name: dealer.name,
+    area: [dealer.address, dealer.city].filter(Boolean).join(', ') || dealer.state || 'Service center',
+    rating: dealer.rating ? dealer.rating.toFixed(1) : 'New',
+    eta: `${distance} - ${pickup}`,
+    slots: dealer.next_available_slot || '11:00 AM, 2:00 PM',
+  }
+}
+
 // ── Styles ────────────────────────────────────────────────────────────────────
 
 const w: Record<string, React.CSSProperties> = {
@@ -433,6 +544,7 @@ const w: Record<string, React.CSSProperties> = {
   locSend: { width: '32px', height: '32px', borderRadius: '9px', background: '#FFD600', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0, transition: 'opacity 0.15s' },
 
   dealerList: { display: 'flex', flexDirection: 'column', gap: '7px', marginTop: '4px' },
+  emptyDealer: { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '10px', padding: '10px', fontSize: '12px', color: 'rgba(255,255,255,0.55)' },
   dealerCard: { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.09)', borderRadius: '11px', padding: '10px', transition: 'border-color 0.15s' },
   dealerTop: { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' },
   dealerName: { fontSize: '12.5px', fontWeight: '700', color: 'rgba(255,255,255,0.85)', marginBottom: '3px' },

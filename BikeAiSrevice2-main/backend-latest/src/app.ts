@@ -19,6 +19,7 @@ import bookingsRoutes from "./modules/bookings/bookings.routes";
 import jobcardsRoutes from "./modules/jobcards/jobcards.routes";
 import billingRoutes from "./modules/billing/billing.routes";
 import dashboardRoutes from "./modules/dashboard/dashboard.routes";
+import { chatBackupLegacyRouter, chatBackupRouter, crmChatMemoryRouter, serviceManagerChatMemoryRouter } from "./modules/chatBackup/routes";
 import { serviceTrackingRouter, wipTrackingRouter } from "./modules/wipTracking/wipTracking.routes";
 
 export function createApp() {
@@ -60,6 +61,10 @@ export function createApp() {
   app.use("/api/service", serviceTrackingRouter);
   app.use("/api/billing", billingRoutes);
   app.use("/api/dashboard", dashboardRoutes);
+  app.use("/api/chat-backup", chatBackupRouter);
+  app.use("/api/chat-backups", chatBackupLegacyRouter);
+  app.use("/api/crm", crmChatMemoryRouter);
+  app.use("/api/service-manager", serviceManagerChatMemoryRouter);
 
   app.use(notFoundHandler);
   app.use(errorHandler);

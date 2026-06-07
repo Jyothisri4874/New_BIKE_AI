@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Store, Users, CalendarCheck, TrendingUp, CircleCheck as CheckCircle2, CircleAlert as AlertCircle, Activity, Bot, Send, Loader } from 'lucide-react'
-import { api, safeGet, type ChatMessage } from "@/lib/api"
+import {
+  api,
+  getChatBackupIdentity,
+  getChatBackupSessionKey,
+  loadChatBackupHistory,
+  safeGet,
+  saveChatBackupMessage,
+  type ChatMessage,
+} from "@/lib/api"
 
 interface Stats {
   totalDealers: number
@@ -166,23 +174,62 @@ function ExecutiveAIPanel({ stats }: { stats: Stats }) {
   const [messages, setMessages] = useState<Array<{ role: 'user'|'assistant'; content: string; id: string }>>([])
   const [input, setInput]       = useState('')
   const [loading, setLoading]   = useState(false)
+  const [backupSessionId, setBackupSessionId] = useState<string | null>(null)
 
   const context = `Current platform stats: ${stats.totalDealers} total dealers (${stats.activeDealers} active, ${stats.pendingDealers} pending approval). ${stats.totalUsers} customers. ${stats.totalBookings} bookings total (${stats.pendingBookings} pending, ${stats.completedBookings} completed). Today's revenue: ₹${stats.revenueToday.toLocaleString()}.`
+  const backupSource = 'dashboard_chat'
+  const backupChatbotType = 'executive'
+  const backupIdentity = getChatBackupIdentity()
+  const backupSessionKey = getChatBackupSessionKey(backupSource, backupChatbotType, backupIdentity.identity)
 
   const QUICK = ['Why is revenue down?', 'Which dealers need attention?', 'Predict today\'s load']
 
+  useEffect(() => {
+    let active = true
+    loadChatBackupHistory({
+      source: backupSource,
+      chatbotType: backupChatbotType,
+      sessionKey: backupSessionKey,
+      userId: backupIdentity.userId,
+      customerId: backupIdentity.customerId,
+      limit: 80,
+    }).then(history => {
+      if (!active) return
+      setBackupSessionId(history.session?.id ?? null)
+      if (history.messages.length) setMessages(history.messages.map(toExecutiveMessage))
+    }).catch(() => {})
+    return () => { active = false }
+  }, [backupSessionKey, backupIdentity.userId, backupIdentity.customerId])
+
+  async function savePanelMessage(sender: 'user' | 'assistant', message: string, sessionId = backupSessionId) {
+    const saved = await saveChatBackupMessage({
+      sessionId,
+      sessionKey: backupSessionKey,
+      source: backupSource,
+      chatbotType: backupChatbotType,
+      sender,
+      message,
+      userId: backupIdentity.userId,
+      customerId: backupIdentity.customerId,
+    }).catch(() => null)
+    if (saved?.session?.id) setBackupSessionId(saved.session.id)
+    return saved?.session?.id || sessionId || undefined
+  }
+
   async function send(text: string) {
     if (!text.trim() || loading) return
+    const userText = text.trim()
     const uid = Date.now().toString()
     const aid = (Date.now()+1).toString()
-    setMessages(prev => [...prev, { role: 'user', content: text, id: uid }, { role: 'assistant', content: '', id: aid }])
+    setMessages(prev => [...prev, { role: 'user', content: userText, id: uid }, { role: 'assistant', content: '', id: aid }])
     setInput('')
     setLoading(true)
     const history: ChatMessage[] = [
       ...messages.slice(-6).map(m => ({ role: m.role, content: m.content })),
-      { role: 'user', content: text },
+      { role: 'user', content: userText },
     ]
     try {
+      const activeSessionId = await savePanelMessage('user', userText)
       const response = await api.post<{ reply?: string; message?: string }>('/api/ai-chat', {
         messages: history,
         context,
@@ -192,8 +239,11 @@ function ExecutiveAIPanel({ stats }: { stats: Stats }) {
       const assistantText = response?.reply || response?.message || 'No response received.'
 
       setMessages(prev => prev.map(m => m.id === aid ? { ...m, content: assistantText } : m))
+      await savePanelMessage('assistant', assistantText, activeSessionId)
     } catch {
-      setMessages(prev => prev.map(m => m.id === aid ? { ...m, content: 'AI service unavailable.' } : m))
+      const fallback = 'AI service unavailable.'
+      setMessages(prev => prev.map(m => m.id === aid ? { ...m, content: fallback } : m))
+      await savePanelMessage('assistant', fallback)
     } finally { setLoading(false) }
   }
 
@@ -245,6 +295,14 @@ function ExecutiveAIPanel({ stats }: { stats: Stats }) {
       <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
     </div>
   )
+}
+
+function toExecutiveMessage(message: { id: string; sender: string; message: string }) {
+  return {
+    id: message.id,
+    role: message.sender === 'user' ? 'user' as const : 'assistant' as const,
+    content: message.message,
+  }
 }
 
 function StatusBadge({ status }: { status: string }) {
